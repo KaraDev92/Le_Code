@@ -1,28 +1,30 @@
+"use strict"
 
+import express from 'express';
+import bodyParser from 'body-parser';
 
-const express = require('express');
-const app = express(),
-      bodyParser = require("body-parser");
-      port = 3080;
+const app = express();
 
-const users = [];
+const port = process.env.PORT || '3000';
+
+//const users = [];
 
 app.use(bodyParser.json());
-app.use(express.static(process.cwd()+"/my-app/dist/angular-nodejs-example/"));
-app.get('/api/users', (req, res) => {
-    res.json(users);
-  });
+app.use(express.static(process.cwd()+"/lAppli/angular/")); //A Compléter
+// app.get('/api/users', (req, res) => {
+//     res.json(users);
+// });
   
-  app.post('/api/user', (req, res) => {
-    const user = req.body.user;
-    users.push(user);
-    res.json("user addedd");
-  });
+// app.post('/api/user', (req, res) => {
+//     const user = req.body.user;
+//     users.push(user);
+//     res.json("user added");
+// });
   
-  app.get('/', (req,res) => {
-    res.sendFile(process.cwd()+"/my-app/dist/angular-nodejs-example/index.html")
-  });
+app.get('/', (req,res) => {
+    res.sendFile(process.cwd()+"/lAppli/angular/index.html")
+});
   
-  app.listen(port, () => {
-      console.log(`Server listening on the port::${port}`);
-  });
+app.listen(port, () => {
+      console.log(`Serveur démarré sur le port : ${port}`);
+});
