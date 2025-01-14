@@ -10,7 +10,7 @@ const port = process.env.PORT || '3000';
 //const users = [];
 
 app.use(bodyParser.json());
-app.use(express.static(process.cwd()+"/lAppli/angular/")); //A Compléter
+app.use(express.static(process.cwd()+"/leFront/angular/")); //A Compléter
 // app.get('/api/users', (req, res) => {
 //     res.json(users);
 // });
