@@ -1,1 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Thasadith:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+/* weigth 400 ou 700 italic ou normal*/
+  
+* {
+    margin:0;
+    padding: 0;
+}
+
+/* variables de style */
+:root {
+    --txt-titre:#3ad6f2;
+    --txt-voyant: #ee670d;
+    --txt: #d79e0c;
+    --txt-form: black;
+    --fond-form: #FFF4B5;
+}
+
+html {
+    background-color: black;
+    font-family: "Thasadith", serif;
+    font-size: 16px;
+    color: var(--txt);
+    font-weight: 500;
+}
