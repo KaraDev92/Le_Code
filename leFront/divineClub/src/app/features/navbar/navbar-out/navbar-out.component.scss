@@ -1,0 +1,21 @@
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    height: 3.4rem;
+    width: 100%;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+// ul {
+//     display:inline;
+// }
+
+
+.nav-item {
+    width: auto;
+    flex-wrap: wrap;
+    text-decoration: none;
+    list-style-type: none;
+}

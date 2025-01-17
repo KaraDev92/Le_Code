@@ -1,0 +1,21 @@
+.logo {
+    background-image: url("../public/logo-small.png"); 
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    width: 4rem;
+    height: 3.4rem;
+}
+header {
+    display: flex;
+    flex-direction: row;
+    margin: 1rem;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+}
+h1 {
+    margin: 0rem;
+    font-size: 3.2rem;
+    font-weight: 900;
+    padding: 0 0.5rem;
+}

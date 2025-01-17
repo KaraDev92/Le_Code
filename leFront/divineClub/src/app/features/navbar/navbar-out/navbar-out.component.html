@@ -1,0 +1,22 @@
+
+<nav class="navbar navbar-out navbar-light bg-light">
+    <!-- <div class="container-fluid"> -->
+        <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+                X membres connectés
+            </li>
+            <li class="nav-item">
+                <a class="navbar-brand">Se Connecter</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active">S'inscrire</a>
+            </li>
+        </ul>
+        <div class="d-flex">
+            <div class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Taper un pseudo" [value]="searchInput">
+                <button (click)="search()">Rechercher</button>
+            </div>
+        </div>
+    <!-- </div> -->
+</nav>
