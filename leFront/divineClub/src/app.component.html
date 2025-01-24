@@ -2,10 +2,10 @@
 
 <header class="header">
   <div class="logo"></div>  
-  <h1>{{ title }}</h1>  
+  <a class="title"  routerLink="/">{{ title }}</a>  
   <app-navbar-out></app-navbar-out>
 </header>
 
 <main class="main">
-  <app-home></app-home>
+  <router-outlet />
 </main>
