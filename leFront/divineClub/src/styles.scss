@@ -4,6 +4,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Thasadith:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 /* weigth 400 ou 700 italic ou normal*/
+
+
+@import url('https://fonts.googleapis.com/css2?family=Sail&display=swap');
+
   
 * {
     margin:0;
@@ -17,10 +21,13 @@
     --txt: #d79e0c;
     --txt-form: black;
     --fond-form: #FFF4B5;
+    --fond: rgba(2, 1, 9, 0.91);
+    --bouton: #f68134;
+    --marque:  #faba1a;
 }
 
 html {
-    background-color: rgba(2, 3, 9, 0.91);
+    background-color: var(--fond);
     font-family: "Thasadith", serif;
     font-size: 16px;
     color: var(--txt);

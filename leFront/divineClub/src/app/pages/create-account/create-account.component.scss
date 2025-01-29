@@ -1,20 +1,82 @@
+section {
+    display: flex;
+    
+}
+.logoBig {
+    background-image: url(../../../../public/logo-big.png);
+    width: 35%;
+    height: 25rem;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 2rem 2rem;
+}
+
 form {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     margin: auto;
     width: 50%;
+    font-weight: 700;
+    font-size: 1.1rem;
 }
 
-input {
-    padding: 0rem 2rem;
-
+h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
 }
 
+p {
+    font-style: italic;
+}
+p:not([class="instruction"]) {
+    color: var(--txt-voyant);
+}
 
+input:not([type='file']),
+select,
+button {
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  width: 13.5rem;
+  border: 1px solid var(--fond);
+  border-radius: 10px;
+  background-color: var(--fond-form);
+}
+
+input, select {
+    padding: 0.1rem 0.5rem;
+    margin: 0.8rem 2rem;
+}
+
+input[type='file'] {
+    width: 20rem;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+button {
+    background-color: var(--bouton);
+    font-size: 1.5rem;
+    color: black;
+    padding: 0.1rem 2rem;
+    border-radius: 20px;
+    margin-left: 4rem;
+}
+
+input[type=file]::file-selector-button {
+    border: 1px solid var(--fond);
+    border-radius: 10px;
+    background: var(--fond-form);
+    color: black;
+    cursor: pointer;
+  }
 
 .ng-valid:not(form) {
-    border: 5px solid green;
+    border: 2px solid green;
 }
 .ng-invalid.ng-touched:not(form) {
-    border: 5px solid red;
+    border: 2px solid red;
 }

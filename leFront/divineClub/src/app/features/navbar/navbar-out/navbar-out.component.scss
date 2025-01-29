@@ -1,21 +1,25 @@
 .navbar {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    height: 3.4rem;
+    height: 3.5rem;
     width: 100%;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 700;
+    margin-top: 1rem;
+    margin-left: 1rem;
 }
 
-// ul {
-//     display:inline;
-// }
-
+.nav-piece {
+    display: block;
+    padding: 0.5rem 1rem 0 1rem;
+    
+}
 
 .nav-item {
     width: auto;
-    flex-wrap: wrap;
+    float: right;
     text-decoration: none;
     list-style-type: none;
+}
+
+a:hover {
+    color: var(--txt-voyant);
 }

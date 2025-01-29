@@ -1,3 +1,35 @@
 <p>login works!</p>
 
-<button (click)="login()">Connexion</button>
+<section class="form-signin ">
+    <div class="logoBig"></div>
+    
+    <form (ngSubmit)="login(myForm)" #myForm="ngForm">
+        <h1 class="">Connexion</h1>
+
+        @if (myForm.submitted && myForm.invalid) {
+            <div class="alert alert-danger" role="alert">
+                @if (email.hasError('required')) {
+                    <span>Email requis</span>
+                }
+                @else if (password.hasError('required')) {
+                    <span>Mot de passe requis</span>
+                }
+            </div>
+        }
+
+        <div class="form">
+            <input name="email" type="email" id="email" class="form-control" placeholder="name@example.com" required email ngModel #email="ngModel">
+            <label for="email">Email</label>
+        </div>
+        <div class="form">
+            <input  name="password" type="password" id="password" class="form-control" placeholder="****" required ngModel #password="ngModel">
+            <label for="password">Mot de passe</label>
+        </div>
+        <div class="form">
+            <!-- à lier -->
+            <p>Mot de passe oublié ?</p>
+        </div>
+
+        <button type="submit">Connexion</button>
+    </form>
+</section>
