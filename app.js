@@ -10,7 +10,7 @@ const port = process.env.PORT || '3000';
 //const users = [];
 
 app.use(bodyParser.json());
-app.use(express.static(process.cwd()+"/leFront/angular/")); //A Compléter
+//app.use(express.static(process.cwd()+"/leFront/divineClub/dist")); //A compléter
 // app.get('/api/users', (req, res) => {
 //     res.json(users);
 // });
@@ -22,7 +22,8 @@ app.use(express.static(process.cwd()+"/leFront/angular/")); //A Compléter
 // });
   
 app.get('/', (req,res) => {
-    res.sendFile(process.cwd()+"/lAppli/angular/index.html")
+    res.send('App Works !');
+    //res.sendFile(process.cwd()+"/leFront/divineClub/index.html")
 });
   
 app.listen(port, () => {

@@ -9,8 +9,8 @@ import { RouterLink } from '@angular/router';
   styleUrl: './navbar-out.component.scss'
 })
 export class NavbarOutComponent { //utiliser ngModel pour du bi-directionnel p.30
-  searchInput = '';
-  search() {
-    console.log(this.searchInput);
-  }
+  // searchInput = '';
+  // search() {                   //barre de recherche
+  //   console.log(this.searchInput);
+  // }
 }
