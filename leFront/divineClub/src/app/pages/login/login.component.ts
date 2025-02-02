@@ -15,15 +15,15 @@ export class LoginComponent {
   private authService: AuthService = inject(AuthService);
 
   
-  login(form: NgForm) {
-    if (form.invalid) return
-    this.authService.login(form.value).subscribe({
-      next: () => {
-        this.router.navigateByUrl('/profile')
-      } //,
+  // login(form: NgForm) {
+  //   if (form.invalid) return
+  //   this.authService.login(form.value).subscribe({
+  //     next: () => {
+  //       this.router.navigateByUrl('/profile')
+  //     } ,
       // error: (err) => {
       //   this.toast.error('Identifiants incorrects')
       // }
-    })
-}
+  //})
+  //}
 }

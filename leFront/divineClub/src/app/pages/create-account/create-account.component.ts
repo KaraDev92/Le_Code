@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { domainValidator } from '../../core/validators/domain-validator';
+import { DataXchangeService } from '../../core/services/data-xchange.service';
 
 @Component({
   selector: 'app-create-account',
@@ -10,6 +11,7 @@ import { domainValidator } from '../../core/validators/domain-validator';
   styleUrl: './create-account.component.scss'
 })
 export class CreateAccountComponent {
+  private dataXchange = inject(DataXchangeService);
   formBuilder = new FormBuilder().nonNullable;
 
   form = this.formBuilder.group({
@@ -31,8 +33,9 @@ export class CreateAccountComponent {
     if (this.form.valid) {
       console.log('Formulaire soumis');
       console.log(this.form);
-      const data = { ...this.form.value, page: 'contact' };
+      const data = { ...this.form.value, page: 'profil' };
       console.log('data', data);
+      this.dataXchange.createMember(this.form)
       this.form.reset();
     }
   }

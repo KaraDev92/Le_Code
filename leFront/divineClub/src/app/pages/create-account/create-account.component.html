@@ -4,6 +4,24 @@
     <form [formGroup]="form" (ngSubmit)="sentFormData()">
         <h2>Inscription</h2>
         <p class="instruction">Tous les champs doivent être remplis</p>
+
+        <div class="form-control">
+            <label>Nom 
+            <input
+                type="text"
+                formControlName="name"
+            />
+            </label>
+            @if(form.controls.name.touched && form.controls.name.errors) {
+                @if(form.controls.name.touched && form.controls.name.errors['required']) {
+                    <p>Vous devez préciser votre nom</p>
+                }
+                @if(form.controls.name.touched && form.controls.name.errors['minlength']) {
+                    <p>Votre nom doit comporter au moins 3 caractères</p>
+                }
+            }
+        </div>   
+
         <div class="form-control">
             <label>Pseudo 
             <input

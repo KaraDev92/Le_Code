@@ -2,28 +2,50 @@
 
 import express from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors';
+import 'dotenv/config';
+import * as echangeur  from './mongoDB/mongoDBQueries';
 
 const app = express();
 
-const port = process.env.PORT || '3000';
+const port = process.env.PORT || '3080';
 
 //const users = [];
-
+app.use(cors());
 app.use(bodyParser.json());
-//app.use(express.static(process.cwd()+"/leFront/divineClub/dist")); //A compléter
-// app.get('/api/users', (req, res) => {
-//     res.json(users);
+//app.use(express.static(process.cwd()+"/leFront/divineClub/dist")); 
+//A compléter pour lancer Angular depuis Node
+
+// A compléter pour avoir tous les membres pour l'admin ?
+// app.get('/users', (req, res) => {
+// //     res.json(users);           
 // });
-  
-// app.post('/api/user', (req, res) => {
-//     const user = req.body.user;
-//     users.push(user);
-//     res.json("user added");
-// });
+
+app.get('/login', echangeur);
+
+app.post('/user', echangeur);
+
+app.put('/user', (req, res) => {
+    //const member = res.body.member;
+    // A compléter 
+    
+});
+
+app.patch('/user', (req, res) => {
+    //const member = res.body.member;
+    // A compléter 
+    
+});
+
+app.delete('/user', (req, res) => {
+    //const member = res.body.member;
+    // A compléter 
+    
+});
   
 app.get('/', (req,res) => {
     res.send('App Works !');
-    //res.sendFile(process.cwd()+"/leFront/divineClub/index.html")
+    //res.sendFile(process.cwd()+"/leFront/divineClub/index.html")  ???
 });
   
 app.listen(port, () => {
