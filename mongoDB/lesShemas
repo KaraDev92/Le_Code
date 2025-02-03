@@ -4,8 +4,7 @@ const { Schema } = mongoose;
 // connexion
 const loginSchema = new Schema( {
     adresse_mail: String,
-    mot_de_passe: String,
-    admin : Boolean,
+    mot_de_passe: String
 });
 export const Login = mongoose.model("Profil", loginSchema);
 

@@ -35,7 +35,7 @@ export class CreateAccountComponent {
       console.log(this.form);
       const data = { ...this.form.value, page: 'profil' };
       console.log('data', data);
-      this.dataXchange.createMember(this.form)
+      this.dataXchange.createMember(this.form);
       this.form.reset();
     }
   }

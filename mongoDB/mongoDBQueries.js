@@ -28,10 +28,15 @@ console.log("Connection à MongoDB en cours ...");
 //     }
 //  });
 
-router.get('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
+    const newLogin = new Login( {
+      adresse_mail: req.body.email,
+      mot_de_passe: req.body.password
+    })
     try {
-      const login = await Login.find();
-      res.json(login);
+      const login = await Login.find();// Find à préciser !
+      // insérer fonction du module d'authentification (à créer)!
+      res.json(login); // résultat doit être authorisation de continuer à renvoyer ????
     } catch (error) {
        res.status(500).json({ message: error.message });
     }

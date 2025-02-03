@@ -1,5 +1,8 @@
 export interface Member {
     pseudo: string;
-    authorized: boolean;
-    admin: boolean
+    admin: boolean;
+    avatar: string;
+    divinity: string;
+    pantheon: string;
+    friends: string
 }
