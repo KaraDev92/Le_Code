@@ -11,7 +11,14 @@ import { LoginM } from '../interfaces/loginM';
 export class DataXchangeService {
   private http = inject(HttpClient);
   //members = signal<Member[]>([]);
-  member = signal<Member>({});  //initialiser la valeur du signal !!!!
+  member = signal<Member>({
+    pseudo: '',
+    admin: false,
+    //avatar: '',
+    divinity: '',
+    pantheon: '',
+    friends: ''
+  });
   readonly rootURL = 'http://localhost:3000';
 
   //récupère tous les membres !!! pour l'admin ?
@@ -32,7 +39,9 @@ export class DataXchangeService {
 
   //GET pour récupèrer 1 membre pour page profil
   getMember(pseudo: string): Observable<Member> {
-    return this.http.get<Member>(`${this.rootURL + '/user'}/${pseudo}`);
+    return this.http.get<Member>(`${this.rootURL + '/user'}/${pseudo}`).pipe(
+      tap(leMember => console.log('Données du membre chargées : ', leMember))
+    );
   }  //récupérer erreur
 
   // POST formulaire pour créer un nouvel utilisateur

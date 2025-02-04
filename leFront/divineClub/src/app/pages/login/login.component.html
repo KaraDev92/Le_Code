@@ -3,7 +3,7 @@
 <section class="form-signin ">
     <div class="logoBig"></div>
     
-    <form (ngSubmit)="login(myForm)" #myForm="ngForm">
+    <form (ngSubmit)="sendLogin(myForm)" #myForm="ngForm">
         <h1 class="">Connexion</h1>
 
         @if (myForm.submitted && myForm.invalid) {

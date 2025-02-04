@@ -16,7 +16,7 @@ export class LoginComponent {
 
   // Service DataXchange à injecter ? pour sendLogin()
 
-  // login(form: NgForm) {
+  // sendLogin(form: NgForm) {
   //   if (form.invalid) return
   //   this.authService.login(form.value).subscribe({
   //     next: () => {

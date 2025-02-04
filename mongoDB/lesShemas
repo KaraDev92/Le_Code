@@ -15,8 +15,8 @@ const newMemberSchema = new Schema( {
     mot_de_passe: String,
     nom: String,
     pantheon: String,
-    type_deite: String,
-    avatar: String
+    type_deite: String //,
+    //avatar: String
 });
 export const NewMember = mongoose.model("Profil", newMemberSchema);
 
@@ -26,7 +26,7 @@ const profilSchema = new Schema ( {
     pantheon: String,
     type_deite: String,
     amis: String,
-    avatar: String,
+    //avatar: String,
     mur: String
 });
 export const Profil = mongoose.model("Profil", profilSchema);

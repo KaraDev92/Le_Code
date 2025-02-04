@@ -64,8 +64,8 @@ router.post('/user', async (req, res) => {
         mot_de_passe: req.body.password,
         nom: req.body.name,
         pantheon: req.body.pantheon,
-        type_deite: req.body.divinity,
-        avatar: req.body.avatar
+        type_deite: req.body.divinity //,
+        //avatar: req.body.avatar
     });
     try {
         const newTask = await newMember.save();

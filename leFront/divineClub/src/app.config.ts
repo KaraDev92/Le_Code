@@ -1,12 +1,15 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, provideZoneChangeDetection, InjectionToken } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import localFr from '@angular/common/locales/fr';
 import { LOCALE_ID } from '@angular/core';
 import { routes } from './app.routes';
+import { authInterceptor } from './app/core/interceptor/auth.interceptor';
 
 registerLocaleData(localFr, 'fr-FR');
+
+export const API_URL = new InjectionToken<string>('API_URL');
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,6 +19,9 @@ export const appConfig: ApplicationConfig = {
       provide: LOCALE_ID,
       useValue: 'fr-FR'		
     },
-    provideHttpClient()
+    provideHttpClient(
+      withInterceptors([authInterceptor])
+    ),
+    { provide: API_URL, useValue: 'http://localhost:3000' } 
   ]
 };

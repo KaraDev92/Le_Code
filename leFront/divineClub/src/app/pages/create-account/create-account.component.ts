@@ -25,8 +25,8 @@ export class CreateAccountComponent {
     email: new FormControl('', [Validators.required, Validators.email, domainValidator]),
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
     pantheon: new FormControl('', [Validators.required]),
-    divinity: new FormControl('', [Validators.required]),
-    avatar: new FormControl('', [Validators.required])
+    divinity: new FormControl('', [Validators.required])//,
+    //avatar: new FormControl('', [Validators.required])
   })
 
   sentFormData() {
@@ -35,7 +35,7 @@ export class CreateAccountComponent {
       console.log(this.form);
       const data = { ...this.form.value, page: 'profil' };
       console.log('data', data);
-      this.dataXchange.createMember(this.form);
+      //this.dataXchange.createMember(this.form.value);
       this.form.reset();
     }
   }
