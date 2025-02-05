@@ -1,4 +1,4 @@
 export interface LoginM {
-    email: string;
+    pseudo: string;
     password: boolean;
 }

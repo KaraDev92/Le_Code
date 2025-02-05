@@ -23,6 +23,7 @@ export const routes: Routes = [
         path: 'profile',
         component: ProfileComponent,
         canActivate : [AuthGuard]
+        //canMatch : [AuthGuard]
     },
     {
         path: '**',  // cette route doit rester à la fin de la liste

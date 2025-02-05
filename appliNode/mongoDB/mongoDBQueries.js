@@ -33,10 +33,11 @@ router.post('/login', async (req, res) => {
       adresse_mail: req.body.email,
       mot_de_passe: req.body.password
     })
-    try {
+    try { //A revoir !!!
       const login = await Login.find();// Find à préciser !
       // insérer fonction du module d'authentification (à créer)!
-      res.json(login); // résultat doit être authorisation de continuer à renvoyer ????
+      // résultat doit être token à renvoyer
+      res.json(login); // résultat doit être token à renvoyer
     } catch (error) {
        res.status(500).json({ message: error.message });
     }
@@ -57,7 +58,7 @@ router.post('/login', async (req, res) => {
 //     }
 //   });
   // Implement other CRUD operations (GET by ID, PUT, DELETE)
-router.post('/user', async (req, res) => {
+router.post('/newuser', async (req, res) => {
     const newMember = new NewMember({
         pseudo: req.body.pseudo,
         adresse_mail: req.body.email,

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { LoginM } from '../interfaces/loginM';
 import { Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
-import { API_URL } from '../../../app.config';
+import { ROOT_URL } from '../../../app.config';
 
 
 type AuthResponse = {
@@ -18,7 +18,7 @@ type AuthResponse = {
 })
 export class AuthService {
   private http = inject(HttpClient);
-  private readonly apiUrl = inject(API_URL);
+  private readonly rootUrl = inject(ROOT_URL);
   token = signal('');
 
   //pour l'option remember me
@@ -26,14 +26,14 @@ export class AuthService {
   //   this.token.set(localStorage.getItem(TOKEN_KEY) ?? '')
   // }
 
-  sendlogin(loginM: LoginM): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(this.apiUrl + '/login', loginM).pipe(
+  sendLogin(loginM: LoginM): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(this.rootUrl + '/login', loginM).pipe(
       tap((response) => {
           const token = response.token;
           this.token.set(token);
-          // doit récupérer le pseudo ???!!!!
+          // ou plutôt dans login.component car sinon doit récupérer le pseudo qui est dans loginM
           //const router = inject(Router);
-          //router.navigateByUrl('/profile', pseudo);
+          //router.navigateByUrl('/profile', pseudo); // ou plutôt dans login.component ?
           
 
           //pour l'option remember me

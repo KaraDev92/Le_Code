@@ -9,7 +9,7 @@ import { authInterceptor } from './app/core/interceptor/auth.interceptor';
 
 registerLocaleData(localFr, 'fr-FR');
 
-export const API_URL = new InjectionToken<string>('API_URL');
+export const ROOT_URL = new InjectionToken<string>('ROOT_URL');
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,6 +22,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptors([authInterceptor])
     ),
-    { provide: API_URL, useValue: 'http://localhost:3000' } 
+    { provide: ROOT_URL, useValue: 'http://localhost:3000' } 
   ]
 };

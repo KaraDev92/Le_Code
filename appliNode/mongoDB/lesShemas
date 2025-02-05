@@ -1,0 +1,63 @@
+import mongoose from "mongoose";
+const { Schema } = mongoose;
+
+// pour connexion
+const loginSchema = new Schema( {
+    adresse_mail: String,
+    mot_de_passe: String
+});
+export const Login = mongoose.model("Profil", loginSchema);
+
+// pour formulaire d'inscription
+const newMemberSchema = new Schema( {
+    pseudo: String,
+    adresse_mail: String,
+    mot_de_passe: String,
+    nom: String,
+    pantheon: String,
+    type_deite: String //,
+    //avatar: String
+});
+export const NewMember = mongoose.model("Profil", newMemberSchema);
+
+//pour la liste d'amis
+const friendSchema = new Schema( {
+    pseudo: String,
+    statut: Boolean
+});
+export const Friend = mongoose.model("Profil", friendSchema);
+
+//pour les posts sur le mur
+const postSchema = new Schema( {
+    auteur: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Profil"
+        }
+    ],
+    //photo:
+    titre: String,
+    contenu: String
+});
+export const Post = mongoose.model("Post", postSchema);
+
+// pour affichage du profil
+const profilSchema = new Schema ( {
+    pseudo: String,
+    pantheon: String,
+    type_deite: String,
+    amis: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Profil"
+        }
+      ],
+    //avatar: String,
+    mur:  [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Post"
+        }
+      ]
+});
+export const Profil = mongoose.model("Profil", profilSchema);

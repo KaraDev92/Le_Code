@@ -4,17 +4,23 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import 'dotenv/config';
-import * as echangeur  from './mongoDB/mongoDBQueries';
+import * as echangeur  from './appliNode/mongoDB/mongoDBQueries';
 
 const app = express();
 
-const port = process.env.PORT || '3080';
+const port = process.env.PORT;
 
-//const users = [];
-app.use(cors());
+const corsOptions = {
+    origin: "http://localhost:3030"
+  };
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 //app.use(express.static(process.cwd()+"/leFront/divineClub/dist")); 
-//A compléter pour lancer Angular depuis Node
+//A compléter pour lancer Angular depuis Node ????
+
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
 
 // A compléter pour avoir tous les membres pour l'admin ?
 // app.get('/users', (req, res) => {
@@ -23,7 +29,7 @@ app.use(bodyParser.json());
 
 app.get('/login', echangeur);
 
-app.post('/user', echangeur);
+app.post('/newuser', echangeur);
 
 app.put('/user', (req, res) => {
     //const member = res.body.member;

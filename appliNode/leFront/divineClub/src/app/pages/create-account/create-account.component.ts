@@ -30,13 +30,17 @@ export class CreateAccountComponent {
   })
 
   sentFormData() {
-    if (this.form.valid) {
-      console.log('Formulaire soumis');
-      console.log(this.form);
-      const data = { ...this.form.value, page: 'profil' };
-      console.log('data', data);
-      //this.dataXchange.createMember(this.form.value);
-      this.form.reset();
-    }
+    if (this.form.invalid) return; //si formulaire pas valide rien
+    console.log('Formulaire soumis');
+    console.log(this.form);
+    const data = { ...this.form.value, page: 'profil' };
+    console.log('data', data);
+    // on envoie le formulaire
+    //this.dataXchange.createMember(this.form.value);
+    // il faut gérer erreur
+    //en suite, si ok
+    //il faut récupérer le token, l'enregistrer et appeler la page profil avec le pseudo
+    this.form.reset();
+    
   }
 }

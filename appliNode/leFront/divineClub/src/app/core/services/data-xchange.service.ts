@@ -3,7 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, tap, catchError } from 'rxjs';
 import { Member } from '../interfaces/member';
 import { NewMember } from '../interfaces/new-member';
-import { LoginM } from '../interfaces/loginM';
+//import { LoginM } from '../interfaces/loginM';
+import { ROOT_URL } from '../../../app.config';
+
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +21,7 @@ export class DataXchangeService {
     pantheon: '',
     friends: ''
   });
-  readonly rootURL = 'http://localhost:3000';
+  private readonly rootURL = inject(ROOT_URL);
 
   //récupère tous les membres !!! pour l'admin ?
   // getMembers(): Observable<Member[]> {
@@ -32,10 +34,10 @@ export class DataXchangeService {
   //   );
   // }
 
-  // POST pour établir la connexion depuis login
-  sendlogin(loginM: LoginM) {
-    return this.http.post<LoginM>(this.rootURL + '/login', loginM);
-  }
+  // POST pour se loguer MAIS c'est auth.service qui s'en charge !
+  // sendlogin(loginM: LoginM) {
+  //   return this.http.post<LoginM>(this.rootURL + '/login', loginM);
+  // }
 
   //GET pour récupèrer 1 membre pour page profil
   getMember(pseudo: string): Observable<Member> {
@@ -46,7 +48,7 @@ export class DataXchangeService {
 
   // POST formulaire pour créer un nouvel utilisateur
   createMember(newMember: NewMember) {
-    return this.http.post<NewMember>(this.rootURL + '/user', newMember);
+    return this.http.post<NewMember>(this.rootURL + '/newuser', newMember);
   }  //récupérer erreur
 
   // PATCH - Mettre à jour partiellement un utilisateur
