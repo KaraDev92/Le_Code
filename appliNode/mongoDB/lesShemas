@@ -3,10 +3,10 @@ const { Schema } = mongoose;
 
 // pour connexion
 const loginSchema = new Schema( {
-    adresse_mail: String,
+    pseudo: String,
     mot_de_passe: String
-});
-export const Login = mongoose.model("Profil", loginSchema);
+}, {collection: "profils"});
+export const Login = mongoose.model("Login", loginSchema);
 
 // pour formulaire d'inscription
 const newMemberSchema = new Schema( {
@@ -15,17 +15,18 @@ const newMemberSchema = new Schema( {
     mot_de_passe: String,
     nom: String,
     pantheon: String,
-    type_deite: String //,
+    type_deite: String,
+    admin: Boolean //,
     //avatar: String
-});
-export const NewMember = mongoose.model("Profil", newMemberSchema);
+}, {collection: "profils"});
+export const NewMember = mongoose.model("NewMember", newMemberSchema);
 
 //pour la liste d'amis
 const friendSchema = new Schema( {
     pseudo: String,
     statut: Boolean
-});
-export const Friend = mongoose.model("Profil", friendSchema);
+}, {collection: "profils"});
+export const Friend = mongoose.model("Friend", friendSchema);
 
 //pour les posts sur le mur
 const postSchema = new Schema( {
@@ -58,6 +59,7 @@ const profilSchema = new Schema ( {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Post"
         }
-      ]
+      ],
+    admin: Boolean
 });
 export const Profil = mongoose.model("Profil", profilSchema);

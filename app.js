@@ -4,7 +4,9 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import 'dotenv/config';
-import * as echangeur  from './appliNode/mongoDB/mongoDBQueries';
+//import * as echangeur  from './appliNode/mongoDB/mongoDBQueries.js;
+import { authRouter } from './appliNode/routes/authRoutes.js';
+import { userRouter } from './appliNode/routes/userRoutes.js';
 
 const app = express();
 
@@ -27,27 +29,29 @@ app.use(express.urlencoded({ extended: true }));
 // //     res.json(users);           
 // });
 
-app.get('/login', echangeur);
+authRouter(app);
+userRouter(app);
+// app.get('/login', echangeur);
 
-app.post('/newuser', echangeur);
+// app.post('/newuser', echangeur);
 
-app.put('/user', (req, res) => {
-    //const member = res.body.member;
-    // A compléter 
+// app.put('/user', (req, res) => {
+//     //const member = res.body.member;
+//     // A compléter 
     
-});
+// });
 
-app.patch('/user', (req, res) => {
-    //const member = res.body.member;
-    // A compléter 
+// app.patch('/user', (req, res) => {
+//     //const member = res.body.member;
+//     // A compléter 
     
-});
+// });
 
-app.delete('/user', (req, res) => {
-    //const member = res.body.member;
-    // A compléter 
+// app.delete('/user', (req, res) => {
+//     //const member = res.body.member;
+//     // A compléter 
     
-});
+// });
   
 app.get('/', (req,res) => {
     res.send('App Works !');
