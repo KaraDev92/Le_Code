@@ -5,8 +5,11 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import 'dotenv/config';
 //import * as echangeur  from './appliNode/mongoDB/mongoDBQueries.js;
+import mongoose from "mongoose";
 import { authRouter } from './appliNode/routes/authRoutes.js';
 import { userRouter } from './appliNode/routes/userRoutes.js';
+
+const uri = process.env.MONGODB_CONNECTION_STRING;
 
 const app = express();
 
@@ -28,6 +31,17 @@ app.use(express.urlencoded({ extended: true }));
 // app.get('/users', (req, res) => {
 // //     res.json(users);           
 // });
+
+//connection de mongoose à la BDD MongoDB
+mongoose.connect(uri);
+mongoose.connection.on("open", function() {
+  console.log('Connection à MongoDB réussie');
+});
+mongoose.connection.on("error", function() {
+  console.error('Connexion à MongoDB a rencontré une erreur :', error);
+});
+  
+  // console.log("Connection à MongoDB en cours ...");
 
 authRouter(app);
 userRouter(app);

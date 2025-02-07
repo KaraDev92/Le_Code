@@ -1,10 +1,10 @@
 
 import 'dotenv/config'
-import { NewMember, Login } from '../mongoDB/lesShemas';
-//import { sign } from 'jsonwebtoken';
-//import { bcrypt } from 'bcryptjs';
-import pkg from 'bcryptjs';
-const { bcrypt } = pkg;
+import { NewMember, Login } from '../mongoDB/lesShemas.js';
+//import { sign } from 'jsonwebtoken'; //module en CommonJS !
+import bcrypt from 'bcryptjs';   //module en CommonJS !
+// import pkg from 'bcryptjs';
+// const { bcrypt } = pkg;
 import pkg2 from 'jsonwebtoken';
 const { sign } = pkg2;
 
@@ -21,12 +21,17 @@ export const signup = (req, res) => {
         //avatar: req.body.avatar
     });
 
-    newUser.save((err, user) => {
-        if (err) {
-            res.status(500).send({ message: err });
-            return;
-        }
+    newUser.save().catch((err) => {
+        console.log(err);
+        //res.status(500).send({ message: err });
+        return;
     });
+    // newUser.save((err, user) => {
+    //     if (err) {
+    //         res.status(500).send({ message: err });
+    //         return;
+    //     }
+    // });
 };
 
 //pour loguer un membre et lui fournir un token
@@ -34,41 +39,73 @@ export const signin = (req, res) => {
     Login.findOne({
         pseudo: req.body.username
     })
-        .exec((err, user) => {
-        if (err) {
-            res.status(500).send({ message: err });
-            return;
-        }
-
-        if (!user) {
-            res.status(404).send({ message: "User Not found." });
-            return;
-        }
-
+    .then((user) => {
         let passwordIsValid = bcrypt.compareSync(
-            req.body.password,
-            user.password
-        );
-
-        if (!passwordIsValid) {
-            return res.status(401).send({
-                accessToken: null,
-                message: "Invalid Password!"
+                req.body.password,
+                user.mot_de_passe
+            );
+    
+            if (!passwordIsValid) {
+                return res.status(401).send({
+                    accessToken: null,
+                    message: "Invalid Password!"
+                });
+            }
+    
+            const token = sign({ id: user.id }, process.env.SECRET,
+                    {
+                        algorithm: 'HS256',
+                        allowInsecureKeySizes: true,
+                        expiresIn: 3600, // 1 heure (en secondes !)
+                    }
+            );
+    
+            res.status(200).send({
+                id: user._id,
+                //pseudo: user.pseudo,
+                accessToken: token
             });
-        }
+    })
+    .catch((err) => {
+        console.log(err);
+        //res.status(500).send({ message: err });
+        return;
+    })
+    // .exec((err, user) => {
+    //     if (err) {
+    //         res.status(500).send({ message: err });
+    //         return;
+    //     }
 
-        const token = sign({ id: user.id }, process.env.SECRET,
-                {
-                    algorithm: 'HS256',
-                    allowInsecureKeySizes: true,
-                    expiresIn: 3600, // 1 heure (en secondes !)
-                }
-        );
+    //     if (!user) {
+    //         res.status(404).send({ message: "User Not found." });
+    //         return;
+    //     }
 
-        res.status(200).send({
-            id: user._id,
-            pseudo: user.pseudo,
-            accessToken: token
-        });
-    });
+    //     let passwordIsValid = bcrypt.compareSync(
+    //         req.body.password,
+    //         user.mot_de_passe
+    //     );
+
+    //     if (!passwordIsValid) {
+    //         return res.status(401).send({
+    //             accessToken: null,
+    //             message: "Invalid Password!"
+    //         });
+    //     }
+
+    //     const token = sign({ id: user.id }, process.env.SECRET,
+    //             {
+    //                 algorithm: 'HS256',
+    //                 allowInsecureKeySizes: true,
+    //                 expiresIn: 3600, // 1 heure (en secondes !)
+    //             }
+    //     );
+
+    //     res.status(200).send({
+    //         id: user._id,
+    //         //pseudo: user.pseudo,
+    //         accessToken: token
+    //     });
+    // });
 };

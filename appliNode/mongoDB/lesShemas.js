@@ -16,8 +16,24 @@ const newMemberSchema = new Schema( {
     nom: String,
     pantheon: String,
     type_deite: String,
+    amis: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Profil"
+      }
+    ],
+  mur:  [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post"
+      }
+    ],
     admin: Boolean //,
-    //avatar: String
+    //avatar: {
+       // type: mongoose.Schema.Types.ObjectId,
+       // ref: "Album"
+    //},
+    //album:[fichiers photos]
 }, {collection: "profils"});
 export const NewMember = mongoose.model("NewMember", newMemberSchema);
 
@@ -36,7 +52,10 @@ const postSchema = new Schema( {
             ref: "Profil"
         }
     ],
-    //photo:
+    //photo: {
+       // type: mongoose.Schema.Types.ObjectId,
+       // ref: "Album"
+    //},
     titre: String,
     contenu: String
 });
