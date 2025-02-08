@@ -8,7 +8,7 @@ const catchError = (err, res) => {
     if (err instanceof TokenExpiredError) {
         return res.status(401).send({ message: "Unauthorized! Access Token was expired!" });
     }
-    return res.sendStatus(401).send({ message: "Unauthorized!" });
+    return res.status(401).send({ message: "Unauthorized!" });
 }
 
 //vérifie si la requête a un token
@@ -16,7 +16,7 @@ export const verifyToken = (req, res, next) => {
     let token = req.headers["authorization"];
 
     if (!token) {
-        return res.status(403).send({ message: "No token provided!" });
+        return res.status(401).send({ message: "No token provided!" });
     }
 
     verify(token, process.env.SECRET, (err, decoded) => {
@@ -29,21 +29,17 @@ export const verifyToken = (req, res, next) => {
 };
 
 //vérifie si le profil est admin
-export const isAdmin = (req, res, next) => {
-    Profil.findById(req.userId)
-    .then((user) => {
-        if (user.admin) {  
+export const isAdmin = async (req, res, next) => {
+    try {
+        const user = await Profil.findById(req.userId);
+        if (user.admin) {
             next();
-            return;
         } else {
             res.status(403).send({ message: "Require Admin Role!" });
-            return;
         }
-    })
-    .catch((err)=> {
-        console.log(err);
-        //res.status(500).send({ message: err });
-        return;
-    });
+    } catch (err) {
+        console.log('problème BDD : ', err);
+        res.status(500).send();
+    }
 };
 

@@ -17,17 +17,24 @@ export class LoginComponent {
   errorMessage: string = '';
 
   sendLogin(form: NgForm) {
-    if (form.invalid) return;  // si form invalide se passe rien
+    // si form invalide message d'erreur et rien 
+    if (form.invalid) {
+      this.errorMessage = "Données saisies invalides";
+      return;
+    } 
     //sinon
     this.authService.sendLogin(form.value).subscribe({
-      next: () => { //appelle la page profil si authService est d'accord (token)
+      //appelle la page profil si authService est d'accord (token reçu)
+      next: () => { 
         this.router.navigateByUrl('/profile')
       },
-      error: (err) => {    // gestion d'erreur d'indentification A compléter
-      //   this.toast.error('Identifiants incorrects');
-        console.log('Identifiants incorrects : ', JSON.stringify(err));
-        if (err.status === 403) {
+      //message d'erreur en fonction de l'erreur
+      error: (err) => {  
+        if (err.status === 401) {
           this.errorMessage = "Identifiants incorrects";
+        }
+        if (err.status === 500) {
+          this.errorMessage = "Nous rencontrons un problème, veuillez réessayer plus tard ...";
         }
       }
     })

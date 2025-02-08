@@ -12,14 +12,16 @@ import { ROOT_URL } from '../../../app.config';
 })
 export class DataXchangeService {
   private http = inject(HttpClient);
+
   //members = signal<Member[]>([]);
+  
   member = signal<Member>({
     pseudo: '',
-    admin: false,
     //avatar: '',
     divinity: '',
     pantheon: '',
-    friends: ''
+    friends: [''],
+    wall:['']
   });
   private readonly rootURL = inject(ROOT_URL);
 
@@ -37,7 +39,7 @@ export class DataXchangeService {
 
   //GET pour récupèrer 1 membre pour page profil
   getMember(): Observable<Member> {
-    return this.http.get<Member>(`${this.rootURL + '/user'}`).pipe(
+    return this.http.get<Member>(this.rootURL + '/user').pipe(
       tap(leMember => console.log('Données du membre chargées : ', leMember))
     );
   }  //récupérer erreur

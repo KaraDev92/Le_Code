@@ -2,6 +2,8 @@
 
 import { verifySignUp } from "../middlewares/verifySignUp.js";
 import { signup, signin } from "../controllers/authController.js";
+import { verifyToken } from "../middlewares/authJwt.js";
+import { dataForProlile } from "../mongoDB/DBQueries.js";
 
 
 export const authRouter = (app) => {
@@ -22,4 +24,6 @@ export const authRouter = (app) => {
 
     //pour se loguer
     app.post("/login", signin);
+
+    app.get("/user", verifyToken, dataForProlile);
 };

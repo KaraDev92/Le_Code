@@ -78,7 +78,6 @@ const profilSchema = new Schema ( {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Post"
         }
-      ],
-    admin: Boolean
+      ]
 });
 export const Profil = mongoose.model("Profil", profilSchema);

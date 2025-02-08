@@ -9,10 +9,10 @@ import { DataXchangeService } from '../../core/services/data-xchange.service';
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
   private dataXchange = inject(DataXchangeService);
   private subscription!: Subscription;
-  member = this.dataXchange.member;
+  member = this.dataXchange.member; // ici ou après le ngOnIit ? 
   
 
   ngOnInit(): void {

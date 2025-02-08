@@ -21,9 +21,11 @@ export const signup = async (req, res) => {
 
     try {
         const user = await newUser.save();
-        res.send({ message: "User was registered successfully!" });
+        res.status(201).send();
+        console.log('User was registered successfully!');
     } catch (err) {
-        res.status(500).send({ message: err });
+        res.status(500).send();
+        console.log('erreur sauvegarde nouvel utilisateur : ', err);
     }
 };
 
@@ -34,7 +36,7 @@ export const signin = async (req, res) => {
 
         if (!user) {
             //return res.status(404).send({ message: "User Not found." });
-            return res.status(403).send();
+            return res.status(401).send();
         }
 
         const passwordIsValid = bcrypt.compareSync(req.body.password, user.mot_de_passe);
@@ -44,7 +46,7 @@ export const signin = async (req, res) => {
             //     accessToken: null,
             //     message: "Invalid Password!"
             // });
-            return res.status(403).send();
+            return res.status(401).send();
         }
 
         const token = sign({ id: user.id }, process.env.SECRET, {
@@ -55,10 +57,11 @@ export const signin = async (req, res) => {
 
         res.status(200).send({
             id: user._id,
-            //pseudo: user.pseudo,
+            //pseudo: user.pseudo, //une data si besoin
             accessToken: token
         });
     } catch (err) {
-        res.status(500).send({ message: err });
+        res.status(500).send();
+        console.log('erreur de login : ', err);
     }
 };
