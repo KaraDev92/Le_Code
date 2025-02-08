@@ -1,7 +1,7 @@
 //import { verify } from "jsonwebtoken";  //MODULE EN COMONjs
 import pkg from 'jsonwebtoken';
 const { verify, TokenExpiredError } = pkg;
-import { Profil } from "../mongoDB/lesShemas.js";
+import { Admin } from "../mongoDB/lesShemas.js";
 import 'dotenv/config';
 
 const catchError = (err, res) => {
@@ -31,7 +31,7 @@ export const verifyToken = (req, res, next) => {
 //vérifie si le profil est admin
 export const isAdmin = async (req, res, next) => {
     try {
-        const user = await Profil.findById(req.userId);
+        const user = await Admin.findById(req.userId);
         if (user.admin) {
             next();
         } else {

@@ -81,3 +81,9 @@ const profilSchema = new Schema ( {
       ]
 });
 export const Profil = mongoose.model("Profil", profilSchema);
+
+//pour le check admin
+const adminSchema = new Schema( {
+  admin: Boolean 
+}, {collection: "profils"});
+export const Admin = mongoose.model("Admin", loginSchema);
