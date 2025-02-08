@@ -4,7 +4,6 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import 'dotenv/config';
-//import * as echangeur  from './appliNode/mongoDB/mongoDBQueries.js;
 import mongoose from "mongoose";
 import { authRouter } from './appliNode/routes/authRoutes.js';
 import { userRouter } from './appliNode/routes/userRoutes.js';
@@ -16,9 +15,14 @@ const app = express();
 const port = process.env.PORT;
 
 const corsOptions = {
-    origin: "http://localhost:3030"
-  };
-
+    origin: "http://localhost:4200"
+};
+  // const corsOptions = {
+  //   origin: 'http://example.com', // Remplacez par le domaine autorisé
+  //   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  //   allowedHeaders: ['Content-Type', 'Authorization'],
+  // };
+  
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 //app.use(express.static(process.cwd()+"/leFront/divineClub/dist")); 
@@ -41,7 +45,7 @@ mongoose.connection.on("error", function() {
   console.error('Connexion à MongoDB a rencontré une erreur :', error);
 });
   
-  // console.log("Connection à MongoDB en cours ...");
+console.log("Connection à MongoDB en cours ...");
 
 authRouter(app);
 userRouter(app);

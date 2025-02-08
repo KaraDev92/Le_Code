@@ -39,7 +39,7 @@ export class CreateAccountComponent {
     //this.dataXchange.createMember(this.form.value);
     // il faut gérer erreur
     //en suite, si ok
-    //il faut récupérer le token, l'enregistrer et appeler la page profil avec le pseudo
+    //il faut renvoyer vers la page Login
     this.form.reset();
     
   }

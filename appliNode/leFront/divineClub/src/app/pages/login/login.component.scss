@@ -45,6 +45,10 @@ input, select {
     padding: 0.1rem 0.5rem;
     margin: 0.8rem 2rem;
 }
+span {
+    color: var(--txt-voyant);
+    font-style: italic;
+}
 
 button {
     background-color: var(--bouton);
@@ -53,6 +57,7 @@ button {
     padding: 0.1rem 2rem;
     border-radius: 20px;
     margin-left: 4rem;
+    margin-top: 1rem;;
 }
 
 .ng-valid:not(form) {

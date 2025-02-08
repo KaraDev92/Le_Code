@@ -34,14 +34,10 @@ export class DataXchangeService {
   //   );
   // }
 
-  // POST pour se loguer MAIS c'est auth.service qui s'en charge !
-  // sendlogin(loginM: LoginM) {
-  //   return this.http.post<LoginM>(this.rootURL + '/login', loginM);
-  // }
 
   //GET pour récupèrer 1 membre pour page profil
-  getMember(pseudo: string): Observable<Member> {
-    return this.http.get<Member>(`${this.rootURL + '/user'}/${pseudo}`).pipe(
+  getMember(): Observable<Member> {
+    return this.http.get<Member>(`${this.rootURL + '/user'}`).pipe(
       tap(leMember => console.log('Données du membre chargées : ', leMember))
     );
   }  //récupérer erreur

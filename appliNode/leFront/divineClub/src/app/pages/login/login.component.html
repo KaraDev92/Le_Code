@@ -1,10 +1,11 @@
-<p>login works!</p>
+
 
 <section class="form-signin ">
     <div class="logoBig"></div>
     
     <form (ngSubmit)="sendLogin(myForm)" #myForm="ngForm">
-        <h1 class="">Connexion</h1>
+        <h2>Connexion</h2>
+        <app-error-message [errorMessage]="errorMessage"></app-error-message>
 
         @if (myForm.submitted && myForm.invalid) {
             <div class="alert alert-danger" role="alert">
