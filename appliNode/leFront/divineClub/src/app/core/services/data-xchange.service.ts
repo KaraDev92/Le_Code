@@ -18,10 +18,11 @@ export class DataXchangeService {
   member = signal<Member>({
     pseudo: '',
     //avatar: '',
-    divinity: '',
+    type_deite: '',
     pantheon: '',
-    friends: [''],
-    wall:['']
+    amis: [''],
+    mur:[''],
+    date_derniere_connexion: new Date()
   });
   private readonly rootURL = inject(ROOT_URL);
 
@@ -40,7 +41,11 @@ export class DataXchangeService {
   //GET pour récupèrer 1 membre pour page profil
   getMember(): Observable<Member> {
     return this.http.get<Member>(this.rootURL + '/user').pipe(
-      tap(leMember => console.log('Données du membre chargées : ', leMember))
+      tap((leMember) => {
+        this.member.set(leMember);
+        console.log('Données du membre chargées : ', leMember);
+        console.log('Données de member  : ', this.member());
+      })
     );
   }  //récupérer erreur
 

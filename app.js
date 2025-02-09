@@ -31,10 +31,6 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-// A compléter pour avoir tous les membres pour l'admin ?
-// app.get('/users', (req, res) => {
-// //     res.json(users);           
-// });
 
 //connection de mongoose à la BDD MongoDB
 mongoose.connect(uri);
@@ -47,17 +43,10 @@ mongoose.connection.on("error", function() {
   
 console.log("Connection à MongoDB en cours ...");
 
+//dispatch des divers requêtes
 authRouter(app);
 userRouter(app);
-// app.get('/login', echangeur);
 
-// app.post('/newuser', echangeur);
-
-// app.put('/user', (req, res) => {
-//     //const member = res.body.member;
-//     // A compléter 
-    
-// });
 
 // app.patch('/user', (req, res) => {
 //     //const member = res.body.member;

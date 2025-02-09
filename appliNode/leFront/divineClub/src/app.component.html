@@ -2,8 +2,15 @@
 
 <header class="header">
   <div class="logo"></div>  
-  <a class="title"  routerLink="/">{{ title }}</a>  
-  <app-navbar-out></app-navbar-out>
+  <a class="title"  routerLink="/">{{ title }}</a> 
+  
+  @if (connected) {
+    <app-navbar-in></app-navbar-in>
+  }
+  @else {
+    <app-navbar-out></app-navbar-out>
+  }
+  
 </header>
 
 <main class="main">

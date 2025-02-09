@@ -78,7 +78,8 @@ const profilSchema = new Schema ( {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Post"
         }
-      ]
+      ],
+    date_derniere_connexion : Date
 });
 export const Profil = mongoose.model("Profil", profilSchema);
 

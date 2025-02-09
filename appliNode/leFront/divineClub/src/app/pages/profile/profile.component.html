@@ -1,7 +1,29 @@
-<p>profile works!</p>
+<section>
+<app-error-message [errorMessage]="errorMessage"></app-error-message>
 
-<!-- <ul>
-    @for (member of members() ; track member.pseudo) {
-      <li>{{ member.pseudo }}</li>
-    }
-  </ul> -->
+  <div class="identite">
+    <h2>Profil</h2>
+    <p>Modifier mon profil</p> <!--A lier-->
+    <p>Date de dernière connexion : {{member.date_derniere_connexion}}</p>
+    <div class="avatar"></div>
+    <p>Nom : {{member.pseudo}}</p>
+    <p>Type de divinité : {{member.type_deite}}</p>
+    <p>Panthéon : {{member.pantheon}}</p>
+  </div>
+
+  <div class="menuProfil">
+    <a href="">Discussions</a>
+    <a href="">Photos</a>
+    <a href="">Messages</a>
+  </div>
+
+  <div>
+    <h3>Amis</h3>
+      <ul>
+        <!-- @for (ami of member.amis ; track member.amis.pseudo) {
+          <li>{{ ami.pseudo }}</li>
+        }          faire un type pour amis et l'insérer dans le type member-->
+      </ul>
+  </div>
+
+</section>

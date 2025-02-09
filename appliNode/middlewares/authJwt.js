@@ -14,7 +14,7 @@ const catchError = (err, res) => {
 //vérifie si la requête a un token
 export const verifyToken = (req, res, next) => {
     let token = req.headers["authorization"];
-
+    console.log('le headers authorization : ', req.headers["authorization"]);
     if (!token) {
         return res.status(401).send({ message: "No token provided!" });
     }

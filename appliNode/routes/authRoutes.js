@@ -14,16 +14,24 @@ export const authRouter = (app) => {
       );
       next();
     });
+
+    //pour le débogage
+    const passerParLa = function(req,res,next) {
+      console.log('la requête est passée par là : ', (req.headers), (req.body));
+      next();
+    }
   
     //pour les nouveaux membres
     app.post(
-        "/newuser",
+        "/newuser", passerParLa,
         verifySignUp,
         signup
     );
 
     //pour se loguer
-    app.post("/login", signin);
 
-    app.get("/user", verifyToken, dataForProlile);
+
+    app.post("/login", passerParLa, signin);
+
+    app.get("/user", passerParLa, verifyToken, dataForProlile);
 };

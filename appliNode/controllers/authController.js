@@ -15,7 +15,8 @@ export const signup = async (req, res) => {
         nom: req.body.name,
         pantheon: req.body.pantheon,
         type_deite: req.body.divinity,
-        admin: false //,
+        admin: false,
+        date_derniere_connexion: new Date() //,
         //avatar: req.body.avatar
     });
 
@@ -52,7 +53,7 @@ export const signin = async (req, res) => {
         const token = sign({ id: user.id }, process.env.SECRET, {
             algorithm: 'HS256',
             allowInsecureKeySizes: true,
-            expiresIn: 3600, // 1 heure en secondes            
+            expiresIn: 600, // 600 = 10 min,  3600 = 1 heure en secondes            
         });
 
         res.status(200).send({
@@ -60,6 +61,8 @@ export const signin = async (req, res) => {
             //pseudo: user.pseudo, //une data si besoin
             accessToken: token
         });
+
+        user.date_derniere_connexion = new Date();
     } catch (err) {
         res.status(500).send();
         console.log('erreur de login : ', err);
