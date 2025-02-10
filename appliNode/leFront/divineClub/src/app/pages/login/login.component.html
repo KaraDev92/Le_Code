@@ -19,16 +19,18 @@
         }
 
         <div class="form">
-            <input name="pseudo" type="text" id="pseudo" class="form-control" placeholder="Superman" required ngModel #pseudo="ngModel">
             <label for="pseudo">Pseudo</label>
+            <input name="pseudo" type="text" id="pseudo" class="form-control" placeholder="Superman" required ngModel #pseudo="ngModel">
+            
         </div>
         <div class="form">
-            <input  name="password" type="password" id="password" class="form-control" placeholder="****" required ngModel #password="ngModel">
             <label for="password">Mot de passe</label>
+            <input  name="password" type="password" id="password" class="form-control" placeholder="****" required ngModel #password="ngModel">
+            
         </div>
-        <div class="form">
+        <div>
             <!-- à lier -->
-            <p>Mot de passe oublié ?</p>
+            <a>Mot de passe oublié ?</a>
         </div>
 
         <button type="submit">Connexion</button>

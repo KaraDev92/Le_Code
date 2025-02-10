@@ -20,8 +20,8 @@ export class DataXchangeService {
     //avatar: '',
     type_deite: '',
     pantheon: '',
-    amis: [''],
-    mur:[''],
+    amis: [{pseudo: ''}],
+    mur:[{auteur:'', date: new Date(), titre:'', contenu:''}],
     date_derniere_connexion: new Date()
   });
   private readonly rootURL = inject(ROOT_URL);
@@ -39,14 +39,28 @@ export class DataXchangeService {
 
 
   //GET pour récupèrer 1 membre pour page profil
+  // async getMember(): Promise<Observable<Member>> {
+  //   try {
+  //     const leMember = await this.http.get<Member>(this.rootURL + '/user');
+  //     this.member.set(leMember);
+  //     console.log('Données du membre chargées : ', leMember);
+  //     console.log('Données de member  : ', this.member());
+  //     return this.member()
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
   getMember(): Observable<Member> {
     return this.http.get<Member>(this.rootURL + '/user').pipe(
       tap((leMember) => {
         this.member.set(leMember);
-        console.log('Données du membre chargées : ', leMember);
         console.log('Données de member  : ', this.member());
+      }),
+      catchError (error => {
+        console.log('Erreur de récup du profil : ', error);
+        throw new Error('Erreur personnalisée');
       })
-    );
+    )  
   }  //récupérer erreur
 
   // POST formulaire pour créer un nouvel utilisateur

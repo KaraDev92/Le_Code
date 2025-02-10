@@ -1,3 +1,5 @@
+//les divers schémas utilisés pour CRUD les données dans la BDD
+
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 

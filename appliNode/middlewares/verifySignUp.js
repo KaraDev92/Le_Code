@@ -1,6 +1,7 @@
+//vérifie si le pseudo et/ou l'email du nouveau membre existe déjà
+
 import { NewMember } from "../mongoDB/lesShemas.js";
 
-//vérifie si le pseudo et/ou l'email du nouveau membre existe déjà
 
 export const verifySignUp = async (req, res, next) => {
     // Username

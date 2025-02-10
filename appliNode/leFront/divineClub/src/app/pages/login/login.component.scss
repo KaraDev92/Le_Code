@@ -29,6 +29,11 @@ h2 {
 p {
     font-style: italic;
 }
+
+a {
+    text-align: right;
+}
+
 input,
 select,
 button {
@@ -57,7 +62,8 @@ button {
     padding: 0.1rem 2rem;
     border-radius: 20px;
     margin-left: 4rem;
-    margin-top: 1rem;;
+    margin-top: 1rem;
+    cursor: pointer;
 }
 
 .ng-valid:not(form) {

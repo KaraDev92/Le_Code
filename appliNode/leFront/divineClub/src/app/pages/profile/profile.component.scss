@@ -1,0 +1,83 @@
+section {
+    margin-bottom: 2rem;
+}
+
+.bandeau {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 1rem 1.5rem;
+}
+
+.identite,
+.posts,
+.amis {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.menuProfil {
+    display: flex;
+    flex-direction: column;
+    font-size: 2rem;
+    font-weight: 700;
+    padding-bottom: 1.5rem;
+}
+
+.menuProfil a {
+    color: var(--txt-titre);
+    padding-bottom: 1.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--txt-titre);
+    margin-bottom: 1.3rem;
+}
+
+.demandes {
+    text-align: right;
+    margin-bottom: 0.5rem;
+}
+
+a:hover {
+    color: var(--txt-voyant);
+}
+
+span {
+    font-style: italic;
+}
+
+.menuProfil a:hover {
+    color: var(--txt-voyant);
+}
+
+.amis, .posts {
+    margin: 1rem 1.5rem;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.unPost {
+    border: 1px var(--marque) solid;
+    padding: 0.5rem;
+    border-radius: 10px;
+}
+.titrePost {
+    color: var(--marque);
+}
+
+.contenuPost {
+    font-size: 1.1rem;
+}
+
+.datePost {
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1rem;
+}

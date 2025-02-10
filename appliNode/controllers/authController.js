@@ -1,6 +1,7 @@
-
+//pour un signup : enregistrement d'un nouveau membre avec vérifications
+//pour un signin : vérification des identifiants et création + envoi d'un token d'authentification
 import 'dotenv/config'
-import { NewMember, Login } from '../mongoDB/lesShemas.js';
+import { NewMember, Login, Profil } from '../mongoDB/lesShemas.js';
 //import { sign } from 'jsonwebtoken'; //module en CommonJS !
 import bcrypt from 'bcryptjs';   //module en CommonJS !
 import pkg2 from 'jsonwebtoken';
@@ -62,7 +63,12 @@ export const signin = async (req, res) => {
             accessToken: token
         });
 
-        user.date_derniere_connexion = new Date();
+        //modifie la date de dernière connexion sur le profil
+        const date = new Date();
+        const doc = Profil.findOne({pseudo: user.pseudo});
+        doc.date_derniere_connexion = date;
+        doc.save();
+
     } catch (err) {
         res.status(500).send();
         console.log('erreur de login : ', err);
