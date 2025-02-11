@@ -28,7 +28,7 @@ export class LoginComponent {
       next: () => { 
         this.router.navigateByUrl('/profile')
       },
-      //message d'erreur en fonction de l'erreur
+      //message d'erreur en fonction de l'erreur reçue
       error: (err) => {  
         if (err.status === 401) {
           this.errorMessage = "Identifiants incorrects";

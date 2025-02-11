@@ -3,7 +3,7 @@
 import { verifySignUp } from "../middlewares/verifySignUp.js";
 import { signup, signin } from "../controllers/authController.js";
 import { verifyToken } from "../middlewares/authJwt.js";
-import { dataForProfile } from "../mongoDB/DBQueries.js";
+import { dataForProfile, newPost } from "../mongoDB/DBQueries.js";
 
 
 export const authRouter = (app) => {
@@ -34,4 +34,6 @@ export const authRouter = (app) => {
     app.post("/login", signin);
 
     app.get("/user", verifyToken, dataForProfile);
+
+    app.put("/userpost", verifyToken, newPost);
 };

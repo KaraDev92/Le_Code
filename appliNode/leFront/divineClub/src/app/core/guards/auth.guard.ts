@@ -9,7 +9,8 @@ export const AuthGuard = () => {
 
   //Si pas authentifié, va sur page login
   if (!authService.isAuthenticated()) {
-      router.navigateByUrl('/login');  
+      router.navigateByUrl('/login'); 
+      authService.logout(); 
       return false
   }
   return true

@@ -4,7 +4,7 @@
   <div class="logo"></div>  
   <a class="title"  routerLink="/">{{ title }}</a> 
   
-  @if (connected) {
+  @if (connected()) {
     <app-navbar-in></app-navbar-in>
   }
   @else {
@@ -16,3 +16,7 @@
 <main class="main">
   <router-outlet />
 </main>
+
+<footer>
+  Ce site a été créé et est la propriété de KaraDev92.
+</footer>

@@ -14,11 +14,11 @@ import { AuthService } from './app/core/services/auth.service';
 })
 export class AppComponent implements OnInit {
   private authService = inject(AuthService);
-  connected = this.authService.isAuthenticated();
+  connected = this.authService.isAuthenticated;
   title = 'Divine Club';
 
   ngOnInit(): void {
-    this.authService.isAuthenticated();
-    console.log('result de isAuthenticated : ', this.connected);
+    this.authService.isAuthenticated;
+    console.log('result de isAuthenticated : ', this.connected());
   }
 }

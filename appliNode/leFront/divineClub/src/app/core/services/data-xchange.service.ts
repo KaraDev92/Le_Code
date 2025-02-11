@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, tap, catchError } from 'rxjs';
 import { Member } from '../interfaces/member';
 import { NewMember } from '../interfaces/new-member';
+import { Post } from '../interfaces/post';
 //import { LoginM } from '../interfaces/loginM';
 import { ROOT_URL } from '../../../app.config';
 
@@ -22,7 +23,8 @@ export class DataXchangeService {
     pantheon: '',
     amis: [{pseudo: ''}],
     mur:[{auteur:'', date: new Date(), titre:'', contenu:''}],
-    date_derniere_connexion: new Date()
+    date_derniere_connexion: new Date(),
+    presentation: ''
   });
   private readonly rootURL = inject(ROOT_URL);
 
@@ -38,40 +40,39 @@ export class DataXchangeService {
   // }
 
 
-  //GET pour récupèrer 1 membre pour page profil
-  // async getMember(): Promise<Observable<Member>> {
-  //   try {
-  //     const leMember = await this.http.get<Member>(this.rootURL + '/user');
-  //     this.member.set(leMember);
-  //     console.log('Données du membre chargées : ', leMember);
-  //     console.log('Données de member  : ', this.member());
-  //     return this.member()
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
+  //GET pour récupérer 1 membre pour page profil
   getMember(): Observable<Member> {
     return this.http.get<Member>(this.rootURL + '/user').pipe(
       tap((leMember) => {
         this.member.set(leMember);
-        console.log('Données de member  : ', this.member());
       }),
       catchError (error => {
         console.log('Erreur de récup du profil : ', error);
-        throw new Error('Erreur personnalisée');
+        throw new Error(error);
       })
     )  
-  }  //récupérer erreur
+  };
 
   // POST formulaire pour créer un nouvel utilisateur
   createMember(newMember: NewMember) {
     return this.http.post<NewMember>(this.rootURL + '/newuser', newMember);
   }  //récupérer erreur
 
-  // PATCH - Mettre à jour partiellement un utilisateur
-  // patchMember(pseudo: string, changes: Partial<Member>): Observable<Member> {
-  //   return this.http.patch<Member>(`${this.rootURL + '/user'}/${pseudo}`, changes);
-  // }  //récupérer erreur
+  // PUT - Mettre à jour un utilisateur
+  //ajout d'un post
+  newPosting(newPost: Post): Observable<Member> {
+    this.member.update((member) => {
+      member.mur. push(newPost);
+      return member;
+    });
+    return this.http.put<Member>(this.rootURL + '/userpost', newPost).pipe(
+      catchError (error => {
+        console.log('Erreur de nouveau post : ', error);
+        throw new Error("Problème d'envoi de votre nouveau post.");
+      })
+    )
+  };
+
   
   // DELETE - Supprimer un utilisateur
   // deleteMember(pseudo: string): Observable<void> {

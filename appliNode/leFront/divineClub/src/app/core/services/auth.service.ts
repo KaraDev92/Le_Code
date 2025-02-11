@@ -1,4 +1,4 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, inject, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LoginM } from '../interfaces/loginM';
 import { Observable, tap } from 'rxjs';
@@ -34,9 +34,11 @@ export class AuthService {
     );
   };
 
-  isAuthenticated(): boolean {
-    return !!this.token();    //rappel : !! convertie this.token en booléen et () pour lire la valeur
-  };
+  // isAuthenticated(): boolean {
+  //   return !!this.token();    //rappel : !! convertie this.token en booléen et () pour lire la valeur
+  // };
+
+  isAuthenticated = computed(() => !!this.token());
 
   logout() {
     localStorage.removeItem(TOKEN_KEY);

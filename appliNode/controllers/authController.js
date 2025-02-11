@@ -16,6 +16,7 @@ export const signup = async (req, res) => {
         nom: req.body.name,
         pantheon: req.body.pantheon,
         type_deite: req.body.divinity,
+        presentation: '',
         admin: false,
         date_derniere_connexion: new Date() //,
         //avatar: req.body.avatar
@@ -54,7 +55,7 @@ export const signin = async (req, res) => {
         const token = sign({ id: user.id }, process.env.SECRET, {
             algorithm: 'HS256',
             allowInsecureKeySizes: true,
-            expiresIn: 600, // 600 = 10 min,  3600 = 1 heure en secondes            
+            expiresIn: 1200, // 600 = 20 min,  3600 = 1 heure en secondes            
         });
 
         res.status(200).send({
@@ -65,9 +66,10 @@ export const signin = async (req, res) => {
 
         //modifie la date de dernière connexion sur le profil
         const date = new Date();
-        const doc = Profil.findOne({pseudo: user.pseudo});
+        const doc = await Profil.findOne({pseudo: user.pseudo});
         doc.date_derniere_connexion = date;
-        doc.save();
+        //doc.presence = true;
+        await doc.save();
 
     } catch (err) {
         res.status(500).send();

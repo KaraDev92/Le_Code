@@ -38,8 +38,7 @@ export class CreateAccountComponent {
     // on envoie le formulaire
     //this.dataXchange.createMember(this.form.value);
     // il faut gérer erreur
-    //en suite, si ok
-    //il faut renvoyer vers la page Login
+    //si ok renvoie à la page login
     this.form.reset();
     
   }

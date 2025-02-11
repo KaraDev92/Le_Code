@@ -18,6 +18,7 @@ const newMemberSchema = new Schema( {
     nom: String,
     pantheon: String,
     type_deite: String,
+    presentation: String,
     amis: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -48,18 +49,19 @@ export const Friend = mongoose.model("Friend", friendSchema);
 
 //pour les posts sur le mur
 const postSchema = new Schema( {
-    auteur: [
+    auteur: 
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Profil"
         }
-    ],
+    ,
     //photo: {
        // type: mongoose.Schema.Types.ObjectId,
        // ref: "Album"
     //},
     titre: String,
-    contenu: String
+    contenu: String,
+    date: Date
 });
 export const Post = mongoose.model("Post", postSchema);
 
@@ -68,6 +70,7 @@ const profilSchema = new Schema ( {
     pseudo: String,
     pantheon: String,
     type_deite: String,
+    presentation: String,
     amis: [
         {
           type: mongoose.Schema.Types.ObjectId,
