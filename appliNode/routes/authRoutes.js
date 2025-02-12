@@ -3,7 +3,7 @@
 import { verifySignUp } from "../middlewares/verifySignUp.js";
 import { signup, signin } from "../controllers/authController.js";
 import { verifyToken } from "../middlewares/authJwt.js";
-import { dataForProfile, newPost } from "../mongoDB/DBQueries.js";
+import { dataForProfile, newPost, searchForAMember } from "../mongoDB/DBQueries.js";
 
 
 export const authRouter = (app) => {
@@ -17,7 +17,7 @@ export const authRouter = (app) => {
 
     //pour le débogage
     const passerParLa = function(req,res,next) {
-      console.log('la requête est passée par là : ', (req.headers), (req.body));
+      console.log('la requête est passée par là : headers', req.headers, ' body : ', req.body);
       next();
     }
   
@@ -29,11 +29,14 @@ export const authRouter = (app) => {
     );
 
     //pour se loguer
-
-
     app.post("/login", signin);
 
+    //pour récupérer les données de son profil
     app.get("/user", verifyToken, dataForProfile);
 
+    //pour poster un nouveau post
     app.put("/userpost", verifyToken, newPost);
+
+    //pour chercher un membre
+    app.post("/searchmember", passerParLa, verifyToken, searchForAMember);
 };

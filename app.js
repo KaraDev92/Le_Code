@@ -48,18 +48,7 @@ authRouter(app);
 userRouter(app);
 
 
-// app.patch('/user', (req, res) => {
-//     //const member = res.body.member;
-//     // A compléter 
-    
-// });
-
-// app.delete('/user', (req, res) => {
-//     //const member = res.body.member;
-//     // A compléter 
-    
-// });
-  
+//page d'accueil  
 app.get('/', (req,res) => {
     res.send('App Works !');
     //res.sendFile(process.cwd()+"/leFront/divineClub/index.html")  ???

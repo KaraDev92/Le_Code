@@ -7,7 +7,7 @@
       <h2>Profil</h2>
       <a class="demandes">&#10518;  Modifier mon profil</a> <!--A lier-->
       <p><span>Date de dernière connexion :</span> {{memberSi().date_derniere_connexion | date: 'medium'}}</p>
-      <p><span>Nom :</span> {{memberSi().pseudo}}</p>
+      <p><span>Pseudo :</span> {{memberSi().pseudo}}</p>
       <p><span>Type de divinité :</span> {{memberSi().type_deite}}</p>
       <p><span>Panthéon :</span> {{memberSi().pantheon}}</p>
       <p><span>Présentation :</span> {{memberSi().presentation}}</p>
@@ -23,40 +23,52 @@
 
   <img src="/separateur2.jpg" alt="séparateur" class="separateur">
 
+  <app-error-message [errorMessage]="errorMessage"></app-error-message>
+
     <div class="amis">
       <h2>Amis</h2>
       <label class="demandes" (click)="afficher('pourAmi')">&#10518;  Chercher un membre : </label>
       @if(afficheRechercherAmi) {
-        <div class="recherche">
-          <input type="text" [(ngModel)]="searchFriendInput">
-          <button (click)="searchFriend()">Rechercher</button>
-        </div>
+        <form class="recherche" (ngSubmit)="searchFriend(unAmi)" #unAmi="ngForm">
+          @if (unAmi.submitted && unAmi.invalid) {
+            <div><span>Tous les champs doivent être remplis</span></div>
+          }
+          <input type="text" name="searchFriendInput" required ngModel #searchFriendInput="ngModel">
+          <button type="submit">Rechercher</button>
+        </form>
       }
       <ul>
         @for (ami of memberSi().amis ; track ami.pseudo) {
         <!-- insérer si ami est connecté en convertissant en couleur -->
-          <li>{{ ami.pseudo }}</li>
+          <li class="demandes" (click)="goToFriendPage(ami.pseudo)">{{ ami.pseudo }}</li>
+          <img src="/poubelle.png" (click)="deleteFriend(ami.pseudo)" class="poubelle">
         }          
       </ul>
     </div>
 
   <img src="/separateur1.jpg" alt="séparateur" class="separateur">
   
+  <app-error-message [errorMessage]="errorMessage"></app-error-message>
+  
   <div class="posts">
     <h2>Posts</h2>
     <p class="demandes" (click)="afficher('pourPost')">&#10518;  Créer un post</p>
     @if (afficheCreerPost){
-      <div class="poster">
+      <form class="poster" (ngSubmit)="poster(lePost)" #lePost="ngForm">
+        @if (lePost.submitted && lePost.invalid) {
+          <div><span>Tous les champs doivent être remplis</span></div>
+        }
+        
         <div>
           <label class="">  Titre du post : </label>
-          <input type="text" [(ngModel)]="titlePostInput">
+          <input type="text" name="titrePostInput"  #titrePostInput="ngModel" ngModel required>
         </div>
         <div>
-          <label class="" for="unPost">Contenu du post : </label>
-          <textarea id="unPost" [(ngModel)]="txtPostInput">Votre pensée du jour ...</textarea>
+          <label>Contenu du post : </label>
+          <textarea name="txtPostInput" #txtPostInput="ngModel" ngModel required>Votre pensée du jour ...</textarea>
         </div>
-        <button (click)="poster()">Poster</button>
-      </div>
+        <button type="submit">Poster</button>
+      </form>
     }
       <ul>
         @for (post of memberSi().mur ; track post.titre) {

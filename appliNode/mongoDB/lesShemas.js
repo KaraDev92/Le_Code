@@ -25,7 +25,7 @@ const newMemberSchema = new Schema( {
         ref: "Profil"
       }
     ],
-  mur:  [
+    mur:  [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Post"
@@ -43,7 +43,23 @@ export const NewMember = mongoose.model("NewMember", newMemberSchema);
 //pour la liste d'amis
 const friendSchema = new Schema( {
     pseudo: String,
-    statut: Boolean
+    //statut: Boolean,
+    type_deite: String,
+    pantheon: String,
+    presentation: String,
+    amis: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Profil"
+        }
+      ],
+    //avatar: String,
+    mur:  [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Post"
+        }
+      ]
 }, {collection: "profils"});
 export const Friend = mongoose.model("Friend", friendSchema);
 

@@ -11,7 +11,7 @@ export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn):
   if (!auth.token()) {
     return next(req)
   }
-
+  //console.log('requête interceptée : ', req);
   const headers = new HttpHeaders({
     Authorization: auth.token()
   });
@@ -19,14 +19,17 @@ export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn):
   const newReq = req.clone({
     headers
   });
-
+  //console.log('requête qui part pour de bon : ', newReq);
   return next(newReq).pipe(
     tap(evt => {
       console.log('Réponse reçue : ', evt);
     }),
     catchError(error => {
       console.log('Une erreur est survenue sur requête HTTP : ', error);
-      //router.navigateByUrl('/login'); //c'est peut-être pas à lui de virer tout le monde !
+      if (error.status === 401) {
+        auth.logout();
+        router.navigateByUrl('/login');
+      }
       throw new Error(error.status);
     })
   )

@@ -23,6 +23,7 @@ export class AuthService {
      this.token.set(localStorage.getItem(TOKEN_KEY) ?? '')
   };
 
+  //fonction de login
   sendLogin(loginM: LoginM): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(this.rootUrl + '/login', loginM).pipe(
       tap((response) => {
@@ -34,12 +35,10 @@ export class AuthService {
     );
   };
 
-  // isAuthenticated(): boolean {
-  //   return !!this.token();    //rappel : !! convertie this.token en booléen et () pour lire la valeur
-  // };
-
+  //version booléen du signal sur le token
   isAuthenticated = computed(() => !!this.token());
 
+  //fonction de déconnexion
   logout() {
     localStorage.removeItem(TOKEN_KEY);
     this.token.set('');
