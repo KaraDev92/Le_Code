@@ -31,10 +31,11 @@ export class FriendPageComponent {
     const amiRecherche = {pseudo: ami};
     this.subscription = this.dataXchange.searchFriend(amiRecherche).subscribe({
       error: (err) => {
-        if (err === 500) {
+        const erreur = String(err);
+        if (erreur === "Error: 500") {
           this.errorMessage = "Nous rencontrons un problème, veuillez réessayer plus tard ...";
         }
-        if (err === 404) {
+        if (erreur === "Error: 404") {
           this.errorMessage = "Ami non trouvé";
         }
       }

@@ -19,4 +19,28 @@ export const verifySignUp = async (req, res, next) => {
     }
   
     next();
-  };
+ };
+
+export const verifyEmail = async (req, res) => {
+  const email = req.params.id;
+  const userByEmail = await NewMember.findOne({ adresse_mail: email }).exec();
+  if (userByEmail) {
+    console.log("Email already exists");
+    res.send({ exists: true });
+    return;
+  }
+  res.send(null);
+  console.log("Email doesn't exist");
+};
+
+export const verifyPseudo = async (req, res) => {
+  const pseudo = req.params.id;
+  const userByEmail = await NewMember.findOne({ pseudo: pseudo }).exec();
+  if (userByEmail) {
+    console.log("Pseudo already exists");
+    res.send({ exists: true });
+    return;
+  }
+  res.send(null);
+  console.log("Pseudo doesn't exist");
+};

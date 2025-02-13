@@ -1,9 +1,10 @@
 //routes pour vérifier l'authentification des utilisateurs
 
-import { verifySignUp } from "../middlewares/verifySignUp.js";
+import { verifySignUp, verifyEmail, verifyPseudo } from "../middlewares/verifySignUp.js";
 import { signup, signin } from "../controllers/authController.js";
 import { verifyToken } from "../middlewares/authJwt.js";
 import { dataForProfile, newPost, searchForAMember } from "../mongoDB/DBQueries.js";
+
 
 
 export const authRouter = (app) => {
@@ -20,13 +21,14 @@ export const authRouter = (app) => {
       console.log('la requête est passée par là : headers', req.headers, ' body : ', req.body);
       next();
     }
-  
+    //pour le validateur d'email
+    app.get("/checkemail/:id", verifyEmail);
+
+    //pour le validateur de pseudo
+    app.get("/checkpseudo/:id", verifyPseudo);
+
     //pour les nouveaux membres
-    app.post(
-        "/newuser", passerParLa,
-        verifySignUp,
-        signup
-    );
+    app.post("/newuser", verifySignUp, signup);
 
     //pour se loguer
     app.post("/login", signin);

@@ -2,7 +2,13 @@
     <div class="logoBig"></div>
 
     <form [formGroup]="form" (ngSubmit)="sentFormData()">
+        <!-- @if (form.invalid) {
+            @if (form.get('email')?.hasError('exists')){ 
+                <p>Cet e-mail est déjà utilisé</p>
+            }
+        } -->
         <h2>Inscription</h2>
+        <app-error-message [errorMessage]="errorMessage"></app-error-message>
         <p class="instruction">Tous les champs doivent être remplis</p>
 
         <div class="form-control">
@@ -37,6 +43,9 @@
                 @if(form.controls.pseudo.touched && form.controls.pseudo.errors['minlength']) {
                     <p>Votre pseudo doit comporter au moins 5 caractères</p>
                 }
+                @if (form.get('pseudo')?.hasError('exists')){ 
+                    <p>Ce pseudo est déjà utilisé</p>
+                }
             }
         </div>
         
@@ -44,13 +53,16 @@
             <label>E-mail 
             <input type="text" formControlName="email" placeholder="toto@totoland.fr" />
             </label>
-            @if(form.controls.email.touched && form.controls.email.errors) {
+            @if(form.controls.pseudo.touched && form.controls.pseudo.errors) {
                 @if (form.controls.email.hasError('invalidDomain')) {
                     <p>Les boites mail jetables ne sont pas autorisées</p>
                 }
-                @else {
-                    <p>Vous devez saisir une adresse e-mail valide</p>
+                @if (form.get('email')?.hasError('exists')){ 
+                    <p>Cet e-mail est déjà utilisé</p>
                 }
+                <!-- @else {
+                    <p>Vous devez saisir une adresse e-mail valide</p>
+                } -->
             }
         </div>
 
@@ -80,17 +92,17 @@
         <div class="form-control">
             <label>Type de divinité </label>
             <select formControlName="divinity">
-                <option value="god">Dieu/Déesse</option>
-                <option value="titan">Titan/Géant</option>
-                <option value="half-god">Demi-Dieu/Demi-Déesse</option>
-                <option value="childfOfGod">Fils/Fille de Dieu Déesse</option>
-                <option value="spirit">Esprit</option>
-                <option value="angel">Angel</option>
-                <option value="demon">Démon</option>
-                <option value="heroe">Héros/Héroïne</option>
-                <option value="saint">Saint/Sainte</option>
-                <option value="prophet">Prophète</option>
-                <option value="other">Autre</option>
+                <option value="Dieu/Déesse">Dieu/Déesse</option>
+                <option value="Titan/Géant">Titan/Géant</option>
+                <option value="Demi-Dieu/Demi-Déesse">Demi-Dieu/Demi-Déesse</option>
+                <option value="Fils/Fille de Dieu/Déesse">Fils/Fille de Dieu/Déesse</option>
+                <option value="Esprit">Esprit</option>
+                <option value="Ange">Ange</option>
+                <option value="Démon">Démon</option>
+                <option value="Héros/Héroïne">Héros/Héroïne</option>
+                <option value="Saint/Sainte">Saint/Sainte</option>
+                <option value="Prophète">Prophète</option>
+                <option value="Autre">Autre</option>
             </select>  
             
             @if(form.controls.divinity.touched && form.controls.divinity.errors) {
@@ -103,23 +115,23 @@
         <div class="form-control">
             <label>Panthéon </label>
                 <select formControlName="pantheon">
-                    <option value="africa">Africain</option>
-                    <option value="aztek">Aztèque</option>
-                    <option value="celtic">Celtique</option>
-                    <option value="chinese">Chinois</option>
-                    <option value="egypt">Égyptien</option>
-                    <option value="gaule">Gaulois</option>
-                    <option value="greec">Grec</option>
-                    <option value="hindou">Hindou</option>
-                    <option value="inca">Inca</option>
-                    <option value="indian">Indien d'Amérique</option>
-                    <option value="japan">Japonais</option>
-                    <option value="maya">Maya</option>
-                    <option value="mesopotamia">Mésopotamien</option>
-                    <option value="nordic">Nordique</option>
-                    <option value="roman">Romain</option>
-                    <option value="theBook">Chrétien/Juif/Musulman</option>
-                    <option value="other">Autre</option>
+                    <option value="Africain">Africain</option>
+                    <option value="Aztèque">Aztèque</option>
+                    <option value="Celtique">Celtique</option>
+                    <option value="Chinois">Chinois</option>
+                    <option value="Égyptien">Égyptien</option>
+                    <option value="Gaulois">Gaulois</option>
+                    <option value="Grec">Grec</option>
+                    <option value="Hindou">Hindou</option>
+                    <option value="Inca">Inca</option>
+                    <option value="Indien d'Amérique">Indien d'Amérique</option>
+                    <option value="Japonais">Japonais</option>
+                    <option value="Maya">Maya</option>
+                    <option value="Mésopotamien">Mésopotamien</option>
+                    <option value="Nordique">Nordique</option>
+                    <option value="Romain">Romain</option>
+                    <option value="Chrétien/Juif/Musulman">Chrétien/Juif/Musulman</option>
+                    <option value="Autre">Autre</option>
                 </select>
             
             @if(form.controls.pantheon.touched && form.controls.pantheon.errors) {

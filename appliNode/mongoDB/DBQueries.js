@@ -46,44 +46,6 @@ export const newPost = async (req, res) => {
     }
 }
 
-//pour chercher un membre
-// export const searchForAMember = async (req, res) => {
-//     const userId = String(req.userId);
-    
-//     try {
-//         const member = await Profil.findOne({pseudo: req.body.pseudo})
-//         .select("amis -_id")
-//         .populate({path: "amis", select: "_id"})
-//         .exec()
-        
-//         //pourComparer = 
-//         const pote = member.amis.some((ami) => String(ami._id) === userId);
-//         if(pote) {
-//             const ami = await Friend.findOne({pseudo: req.body.pseudo})
-//             .select("pseudo pantheon type_deite amis mur presentation -_id")
-//             .populate([
-//                 {path: "amis", select:"pseudo -_id"}, 
-//                 {path: "mur",select: "date titre contenu -_id"}
-//             ])
-//             .exec();
-
-//             res.send(ami);            
-//         } else {
-//             const client = await Friend.findOne({pseudo: req.body.pseudo})
-//             .select("pseudo pantheon type_deite presentation -_id")
-//             .exec();
-
-//             res.send(client); 
-//         }
-//     }
-//     catch (err) {
-//         console.log('problème BDD : ', err);
-//         res.status(500).send();
-//     }
-    
-    
-// }
-
 // Fonction pour trouver un membre par pseudo
 const findMemberByPseudo = async (pseudo) => {
     return await Profil.findOne({ pseudo })

@@ -30,14 +30,12 @@ export class DataXchangeService {
     presentation: ''
   });
   
-
-
   friend = signal<Friend>({
     pseudo: '',
     pantheon: '',
     type_deite: '',
     amis: [{pseudo: '', pantheon: '', type_deite: '', amis: [], mur: [], presentation: ''}],
-    mur:[{auteur:'', date: new Date(), titre:'', contenu:''}],
+    mur:[{auteur:'', date: new Date(''), titre:'', contenu:''}],
     presentation: ''
   });
 
@@ -75,14 +73,19 @@ export class DataXchangeService {
       }),
       catchError (error => {
         console.log('Erreur de recherche d\'ami : ', error);
-        throw new Error(error);
+        throw error;
     }))
   };
 
   // POST formulaire pour créer un nouvel utilisateur
-  createMember(newMember: NewMember) {
-    return this.http.post<NewMember>(this.rootURL + '/newuser', newMember);
-  }  //récupérer erreur
+  createMember(newMember: NewMember): Observable<NewMember> {
+    return this.http.post<NewMember>(this.rootURL + '/newuser', newMember).pipe(
+      catchError (error => {
+        console.log('Erreur de création de compte : ', error);
+        throw new Error(error);
+      })
+    );
+  }
 
   // PUT - Mettre à jour un utilisateur
   //ajout d'un post
@@ -100,10 +103,10 @@ export class DataXchangeService {
   };
 
   //supprimer un ami
-  deleteFriend(amiRecherche: object): Observable<Member> {
+  deleteFriend(amiRecherche: { pseudo: string }): Observable<Member> {
     console.log('pseudo recherché : ', amiRecherche);
     this.member.update((member) => {
-      member.amis.filter((ami) => ami.pseudo !== amiRecherche.pseudo);
+      member.amis = member.amis.filter((ami) => ami.pseudo !== amiRecherche.pseudo);
       return member;
     });
     return this.http.put<Member>(this.rootURL + '/deletefriend', amiRecherche).pipe(
