@@ -1,6 +1,7 @@
 //les divers schémas utilisés pour CRUD les données dans la BDD
 
 import mongoose from "mongoose";
+
 const { Schema } = mongoose;
 
 // pour connexion
@@ -31,7 +32,13 @@ const newMemberSchema = new Schema( {
         ref: "Post"
       }
     ],
-    admin: Boolean //,
+    admin: Boolean,
+    messages:[
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Message"
+      }
+    ],
     //avatar: {
        // type: mongoose.Schema.Types.ObjectId,
        // ref: "Album"
@@ -109,3 +116,35 @@ const adminSchema = new Schema( {
   admin: Boolean 
 }, {collection: "profils"});
 export const Admin = mongoose.model("Admin", loginSchema);
+
+//pour le destinataire d'un message
+const messagerieSchema = new Schema( {
+  pseudo: String,
+  adresse_mail: String,
+  messages: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Message"
+    }
+  ]
+}, {collection: "profils"});
+export const Messagerie = mongoose.model("Messagerie", messagerieSchema);
+
+const messageSchema = new Schema( {
+  expediteur:  
+    {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Profil"
+    },
+  destinataire: 
+    {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Profil"
+    },
+  sujet: String,
+  contenu: String,
+  date: Date,
+  lu: Boolean
+}, {collection: "messages"});
+export const Message = mongoose.model("Message", messageSchema);
+

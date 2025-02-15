@@ -41,7 +41,7 @@ export const isAdmin = async (req, res, next) => {
         }
     } catch (err) {
         console.log('problème BDD : ', err);
-        res.status(500).send();
+        res.status(502).send();
     }
 };
 

@@ -41,10 +41,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.subscription3 = this.dataXchange.searchFriend(amiRecherche).subscribe({
       error: (err) => {
         const erreur = String(err);
-        if (erreur === "Error: 500") {
+        if (erreur === "Error: 502") {
           this.errorMessage = "Nous rencontrons un problème, veuillez réessayer plus tard ...";
         }
-        if (erreur === "Error: 404") {
+        if (erreur === "Error: 418") {
           this.errorMessage = "Ami non trouvé";
         }
       }
@@ -56,10 +56,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.subscription3 = this.dataXchange.deleteFriend(amiRecherche).subscribe({
       error: (err) => {
         const erreur = String(err);
-        if (erreur === "Error: 500") {
+        if (erreur === "Error: 502") {
           this.errorMessage = "Nous rencontrons un problème, veuillez réessayer plus tard ...";
         }
-        if (erreur === "Error: 404") {
+        if (erreur === "Error: 418") {
           this.errorMessage = "Ami non trouvé";
         }
       }
@@ -77,10 +77,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
       error: (err) => {
         const erreur = String(err);
         console.log('erreur reçue dans le composant profile : ', erreur);
-        if (erreur === "Error: 500") {
+        if (erreur === "Error: 502") {
           this.errorMessage = "Nous rencontrons un problème, veuillez réessayer plus tard ...";
         }
-        if (erreur === "Error: 404") {
+        if (erreur === "Error: 418") {
           this.errorMessage = "Ami non trouvé";
         }
       }
@@ -103,7 +103,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.subscription2 = this.dataXchange.newPosting(newPost).subscribe({
       error: (err) => {
         const erreur = String(err);
-        if (erreur === "Error: 500") {
+        if (erreur === "Error: 502") {
           this.errorMessage = "Nous rencontrons un problème, veuillez réessayer plus tard ...";
         }
       }
@@ -117,7 +117,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.subscription = this.dataXchange.getMember().subscribe({
       error: (err) => {  
         const erreur = String(err);
-        if (erreur === "Error: 500") {
+        if (erreur === "Error: 502") {
           this.errorMessage = "Nous rencontrons un problème, veuillez réessayer plus tard ...";
         }
       }

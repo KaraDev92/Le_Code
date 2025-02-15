@@ -25,11 +25,15 @@ export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn):
       console.log('Réponse reçue : ', evt);
     }),
     catchError(error => {
-      console.log('Une erreur est survenue sur requête HTTP : ', error);
-      if (error.status === 401) {
+      //console.log('Une erreur est survenue sur requête HTTP : ', error);
+      if (error.status === 401 || error.status === 403) {
         auth.logout();
         router.navigateByUrl('/login');
       }
+      if (error.status === 404) {
+        router.navigateByUrl('/not-found');
+      }
+
       throw new Error(error.status);
     })
   )

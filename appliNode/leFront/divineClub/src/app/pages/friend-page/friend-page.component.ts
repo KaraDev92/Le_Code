@@ -6,6 +6,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { MessagesService } from '../../core/services/messages.service';
 
 @Component({
   selector: 'app-friend-page',
@@ -18,6 +19,7 @@ export class FriendPageComponent {
   private dataXchange = inject(DataXchangeService);
   private router = inject(Router);
   private subscription!: Subscription;
+  private messagesService = inject(MessagesService);
 
   friendSi = this.dataXchange.friend;
   memberSi = this.dataXchange.member;
@@ -32,14 +34,32 @@ export class FriendPageComponent {
     this.subscription = this.dataXchange.searchFriend(amiRecherche).subscribe({
       error: (err) => {
         const erreur = String(err);
-        if (erreur === "Error: 500") {
+        if (erreur === "Error: 502") {
           this.errorMessage = "Nous rencontrons un problème, veuillez réessayer plus tard ...";
         }
-        if (erreur === "Error: 404") {
+        if (erreur === "Error: 418") {
           this.errorMessage = "Ami non trouvé";
         }
       }
     });
   };
+
+  expediteur = this.memberSi().pseudo;
+  sendMessage(ami:string, sujet: string, contenu:string) {
+    this.subscription = this.messagesService.sendMessage(this.expediteur, ami, sujet, contenu).subscribe({
+      next: () => {
+        this.errorMessage = "Message envoyé";
+      },
+      error: (err) => {
+        const erreur = String(err);
+        if (erreur === "Error: 502") {
+          this.errorMessage = "Nous rencontrons un problème, veuillez réessayer plus tard ...";
+        }
+        if (erreur === "Error: 418") {
+          this.errorMessage = "Ami non trouvé";
+        }
+      }
+    });
+  }
 
 }

@@ -77,7 +77,8 @@ export class DataXchangeService {
     }))
   };
 
-  // POST formulaire pour créer un nouvel utilisateur
+  // POST 
+  // formulaire pour créer un nouvel utilisateur
   createMember(newMember: NewMember): Observable<NewMember> {
     return this.http.post<NewMember>(this.rootURL + '/newuser', newMember).pipe(
       catchError (error => {
@@ -87,7 +88,8 @@ export class DataXchangeService {
     );
   }
 
-  // PUT - Mettre à jour un utilisateur
+
+  // PUT 
   //ajout d'un post
   newPosting(newPost: Post): Observable<Member> {
     this.member.update((member) => {
@@ -118,7 +120,7 @@ export class DataXchangeService {
   };
 
   
-  // DELETE - Supprimer un utilisateur
+  // DELETE - Supprimer son compte
   // deleteMember(pseudo: string): Observable<void> {
   //   return this.http.delete<void>(`${this.rootURL + '/user'}/${pseudo}`);
   // }  //récupérer erreur

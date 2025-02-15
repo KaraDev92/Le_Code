@@ -4,6 +4,7 @@ import { verifySignUp, verifyEmail, verifyPseudo } from "../middlewares/verifySi
 import { signup, signin } from "../controllers/authController.js";
 import { verifyToken } from "../middlewares/authJwt.js";
 import { dataForProfile, newPost, searchForAMember } from "../mongoDB/DBQueries.js";
+import { sendMessage } from "../middlewares/messenger.js";
 
 
 
@@ -41,4 +42,7 @@ export const authRouter = (app) => {
 
     //pour chercher un membre
     app.post("/searchmember", passerParLa, verifyToken, searchForAMember);
+
+    //pour envoyer un message
+    app.post("/sendmessage", passerParLa, verifyToken, sendMessage);
 };

@@ -27,7 +27,7 @@ export const signup = async (req, res) => {
         res.status(201).send();
         console.log('User was registered successfully!');
     } catch (err) {
-        res.status(500).send();
+        res.status(502).send();
         console.log('erreur sauvegarde nouvel utilisateur : ', err);
     }
 };
@@ -38,17 +38,12 @@ export const signin = async (req, res) => {
         const user = await Login.findOne({ pseudo: req.body.pseudo }).exec();
 
         if (!user) {
-            //return res.status(404).send({ message: "User Not found." });
             return res.status(401).send();
         }
 
         const passwordIsValid = bcrypt.compareSync(req.body.password, user.mot_de_passe);
 
         if (!passwordIsValid) {
-            // return res.status(401).send({
-            //     accessToken: null,
-            //     message: "Invalid Password!"
-            // });
             return res.status(401).send();
         }
 

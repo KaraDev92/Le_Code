@@ -17,11 +17,7 @@ const port = process.env.PORT;
 const corsOptions = {
     origin: "http://localhost:4200"
 };
-  // const corsOptions = {
-  //   origin: 'http://example.com', // Remplacez par le domaine autorisé
-  //   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  //   allowedHeaders: ['Content-Type', 'Authorization'],
-  // };
+
   
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
@@ -51,7 +47,7 @@ userRouter(app);
 //page d'accueil  
 app.get('/', (req,res) => {
     res.send('App Works !');
-    //res.sendFile(process.cwd()+"/leFront/divineClub/index.html")  ???
+    //res.sendFile(process.cwd()+"/leFront/divineClub/dist/front/brownser/index.html")  ???
 });
   
 app.listen(port, () => {

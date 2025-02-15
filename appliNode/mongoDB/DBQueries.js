@@ -14,11 +14,11 @@ export const dataForProfile = async (req, res) => {
             {path: "mur",select: "date titre contenu -_id"}])
         .exec();
         
-        res.send(user);
+        res.status(200).send(user);
 
     } catch (err) {
         console.log('problème BDD : ', err);
-        res.status(500).send();
+        res.status(502).send();
     }
 };
 
@@ -33,16 +33,17 @@ export const newPost = async (req, res) => {
             contenu: req.body.contenu,
             date: date,
             auteur: userId
-          });
+        });
         
         await post.save();
           
         const user = await Profil.findById(userId);
         user.mur.push(post);
         await user.save();
+        res.status(201).send();
     } catch (err) {
         console.log('problème BDD : ', err);
-        res.status(500).send();
+        res.status(502).send();
     }
 }
 
@@ -85,7 +86,8 @@ export const searchForAMember = async (req, res) => {
         const member = await findMemberByPseudo(req.body.pseudo);
 
         if (!member) {
-            return res.status(404).send({ message: "Membre non trouvé" });
+            console.log("Membre non trouvé");
+            return res.status(418).send();
         }
 
         if (isFriend(member, userId)) {
@@ -97,6 +99,6 @@ export const searchForAMember = async (req, res) => {
         }
     } catch (err) {
         console.log('problème BDD : ', err);
-        res.status(500).send();
+        res.status(502).send();
     }
 };

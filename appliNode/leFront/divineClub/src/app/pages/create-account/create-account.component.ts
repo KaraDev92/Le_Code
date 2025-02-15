@@ -49,12 +49,9 @@ export class CreateAccountComponent {
       },
       error: (err) => {
         const erreur = String(err);
-        if (erreur === "Error: 500") {
+        if (erreur === "Error: 502" || erreur === "Error: 400") {
           this.errorMessage = "Nous rencontrons un problème, veuillez réessayer plus tard ...";
         }
-        // if (err === 404) { //à modifier
-        //   this.errorMessage = "Ami non trouvé";
-        // }
       }
     });
     this.form.reset();
