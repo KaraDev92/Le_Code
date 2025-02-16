@@ -7,11 +7,12 @@ import { DatePipe } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { MessagesService } from '../../core/services/messages.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-friend-page',
   standalone: true,
-  imports: [ErrorMessageComponent, FormsModule, DatePipe],
+  imports: [ErrorMessageComponent, FormsModule, DatePipe, RouterLink],
   templateUrl: './friend-page.component.html',
   styleUrl: './friend-page.component.scss'
 })
@@ -44,22 +45,6 @@ export class FriendPageComponent {
     });
   };
 
-  expediteur = this.memberSi().pseudo;
-  sendMessage(ami:string, sujet: string, contenu:string) {
-    this.subscription = this.messagesService.sendMessage(this.expediteur, ami, sujet, contenu).subscribe({
-      next: () => {
-        this.errorMessage = "Message envoyé";
-      },
-      error: (err) => {
-        const erreur = String(err);
-        if (erreur === "Error: 502") {
-          this.errorMessage = "Nous rencontrons un problème, veuillez réessayer plus tard ...";
-        }
-        if (erreur === "Error: 418") {
-          this.errorMessage = "Ami non trouvé";
-        }
-      }
-    });
-  }
+  
 
 }

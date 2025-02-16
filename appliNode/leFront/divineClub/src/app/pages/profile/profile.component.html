@@ -17,7 +17,7 @@
     <div class="menuProfil">
       <a href="">Discussions</a>
       <a href="">Photos</a>
-      <a href="">Messages</a>
+      <a routerLink="/messages">Messages</a>
     </div>
   </div>
 
@@ -61,7 +61,7 @@
         
         <div>
           <label class="">  Titre du post : </label>
-          <input type="text" name="titrePostInput"  #titrePostInput="ngModel" ngModel required>
+          <input type="text" name="titrePostInput" maxlength="50" #titrePostInput="ngModel" ngModel required>
         </div>
         <div>
           <label>Contenu du post : </label>

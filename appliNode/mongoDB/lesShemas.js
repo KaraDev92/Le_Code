@@ -117,7 +117,7 @@ const adminSchema = new Schema( {
 }, {collection: "profils"});
 export const Admin = mongoose.model("Admin", loginSchema);
 
-//pour le destinataire d'un message
+//pour le destinataire d'un message OU récupérer liste messages et amis
 const messagerieSchema = new Schema( {
   pseudo: String,
   adresse_mail: String,
@@ -125,6 +125,12 @@ const messagerieSchema = new Schema( {
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Message"
+    }
+  ],
+  amis: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Profil"
     }
   ]
 }, {collection: "profils"});

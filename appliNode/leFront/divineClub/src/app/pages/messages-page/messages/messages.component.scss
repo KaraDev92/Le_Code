@@ -1,0 +1,100 @@
+section {
+    margin-bottom: 2rem;
+}
+
+.write-message,
+.read-message {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 1rem 1.5rem;
+    gap: 1rem;
+}
+
+.menuProfil {
+    display: flex;
+    flex-direction: column;
+    font-size: 2rem;
+    font-weight: 700;
+    padding-bottom: 1.5rem;
+}
+
+.menuProfil a {
+    color: var(--txt-titre);
+    padding-bottom: 1.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--txt-titre);
+    margin-bottom: 1.3rem;
+}
+
+span {
+    font-style: italic;
+}
+
+.menuProfil a:hover {
+    color: var(--txt-voyant);
+}
+
+ul {
+    list-style-type: none;
+}
+
+.unMessage {
+    border: 1px var(--marque) solid;
+    padding: 0.5rem;
+    border-radius: 10px;
+    margin-bottom: 0.5rem;
+}
+
+.contenuMessage {
+    font-size: 1.1rem;
+}
+
+.dateMessage {
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.separateur {
+    width: 35%;
+    margin: 1rem 32%;
+}
+
+.demandes:hover {
+    color: var(--txt-voyant);
+    cursor: pointer;
+}
+
+button {
+    background-color: var(--bouton);
+    color: black;
+    padding: 0rem 1.5rem;
+    cursor: pointer;
+    width: 8rem;
+    border-radius: 20px;
+    border: 1px solid var(--fond);
+}
+
+input, 
+textarea,
+select {
+    padding: 1rem;
+    margin: 0.5rem 2rem;
+    background-color: var(--fond-form);
+    border: 1px solid var(--fond);
+    border-radius: 20px;
+}
+input {
+    width: 12rem;
+}
+
+textarea {
+    width: 25rem;
+    height: 5rem;
+}

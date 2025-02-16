@@ -6,6 +6,8 @@ import { CreateAccountComponent } from './app/pages/create-account/create-accoun
 import { AuthGuard } from './app/core/guards/auth.guard';
 import { ProfileComponent } from './app/pages/profile/profile.component';
 import { FriendPageComponent } from './app/pages/friend-page/friend-page.component';
+import { MessagesComponent } from './app/pages/messages-page/messages/messages.component';
+
 
 export const routes: Routes = [
     {
@@ -33,6 +35,11 @@ export const routes: Routes = [
     {
         path: 'friend',
         component: FriendPageComponent,
+        canActivate : [AuthGuard]
+    },
+    {
+        path: 'messages',
+        component: MessagesComponent,
         canActivate : [AuthGuard]
     },
 

@@ -4,7 +4,7 @@ import { verifySignUp, verifyEmail, verifyPseudo } from "../middlewares/verifySi
 import { signup, signin } from "../controllers/authController.js";
 import { verifyToken } from "../middlewares/authJwt.js";
 import { dataForProfile, newPost, searchForAMember } from "../mongoDB/DBQueries.js";
-import { sendMessage } from "../middlewares/messenger.js";
+import { sendMessage, getMessagesFriends, markread } from "../middlewares/messenger.js";
 
 
 
@@ -28,21 +28,27 @@ export const authRouter = (app) => {
     //pour le validateur de pseudo
     app.get("/checkpseudo/:id", verifyPseudo);
 
+    //pour récupérer les données de son profil
+    app.get("/user", verifyToken, dataForProfile);
+
+    //pour récupérer les messages du membre
+    app.get("/messagearea", passerParLa, verifyToken, getMessagesFriends);
+
+    //pour poster un nouveau post
+    app.put("/userpost", verifyToken, newPost);
+
+    //pour marquer un message comme lu
+    app.put("/markread", passerParLa, verifyToken, markread);
+
     //pour les nouveaux membres
     app.post("/newuser", verifySignUp, signup);
 
     //pour se loguer
     app.post("/login", signin);
 
-    //pour récupérer les données de son profil
-    app.get("/user", verifyToken, dataForProfile);
-
-    //pour poster un nouveau post
-    app.put("/userpost", verifyToken, newPost);
-
     //pour chercher un membre
     app.post("/searchmember", passerParLa, verifyToken, searchForAMember);
 
     //pour envoyer un message
-    app.post("/sendmessage", passerParLa, verifyToken, sendMessage);
+    app.put("/sendmessage", passerParLa, verifyToken, sendMessage);
 };

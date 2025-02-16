@@ -5,12 +5,13 @@ import { ErrorMessageComponent } from "../../features/error-message/error-messag
 import { DatePipe } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Post } from '../../core/interfaces/post';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [ErrorMessageComponent, DatePipe, FormsModule],
+  imports: [ErrorMessageComponent, DatePipe, FormsModule, RouterLink],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })

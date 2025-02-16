@@ -1,0 +1,59 @@
+<section>
+    <app-error-message [errorMessage]="errorMessage"></app-error-message>
+
+    <h2>Messages</h2>
+    <div class="write-message">
+        <p class="demandes" (click)="afficher('pourEcrire')">&#10518;  Rédiger un message</p>
+        @if (afficheCreerMessage){
+        <form class="rediger" (ngSubmit)="sendMessage(leMessage)" #leMessage="ngForm">
+            @if (leMessage.submitted && leMessage.invalid) {
+            <div><span>Tous les champs doivent être remplis</span></div>
+            }
+            
+            <div>
+                <label>Destinataire : </label>
+                <select name="recipientInput" aria-placeholder="Choisissez un ami" ngModel>
+                    @for (ami of messageListSi().amis ; track ami.pseudo) {
+                        <option value={{ami.pseudo}}>{{ ami.pseudo }}</option>
+                    }
+                </select>
+            </div>
+            <div>
+                <label>  Sujet du message : </label>
+                <input type="text" name="titreMessageInput" maxlength="50" #titreMessageInput="ngModel" ngModel required>
+            </div>
+            <div>
+            <label>Contenu du message : </label>
+            <textarea name="txtMessageInput" #txtMessageInput="ngModel" ngModel required>Alors tu devineras jamais ...</textarea>
+            </div>
+            <button type="submit">Envoyer</button>
+        </form>
+        }
+    </div>
+
+    <img src="/separateur3.jpg" alt="séparateur" class="separateur">
+
+    <div class="read-message">
+      <ul>
+        @for (message of messageListSi().messages ; track message.date) {
+            <div class="unMessage">
+            @if (!message.lu) {
+                <li class="messageNonLu " (click)="afficher('pourLire')" (click)="marquerLu(message)">
+                    De : {{ message.expediteur}}, le :  {{ message.date | date: 'medium'}}, sujet :  {{ message.sujet }}</li>
+            }
+            @else {
+                <li class="" (click)="afficher('pourLire')" (click)="marquerLu(message)">
+                    De : {{ message.expediteur}}, le :  {{ message.date | date: 'medium'}}, sujet :  {{ message.sujet }}</li>
+            }
+                @if (afficheMessage) {
+                    <ul>
+                    <li class="dateMessage">{{ message.date | date: 'medium'}}</li>
+                    <li class="contenuMessage">{{ message.contenu}}</li>
+                    </ul>
+                }
+            </div>  
+        } 
+      </ul>
+  </div>
+
+</section>

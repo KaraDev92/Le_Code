@@ -6,7 +6,7 @@ const mailpassword = process.env.MAILPASSWORD;
 
 // Création d'un objet transporteur
 const transporter = nodemailer.createTransport({
-  host: 'smtp.mail.infomaniak.com',
+  host: 'mail.infomaniak.com',
   port: 465,
   secure: true, // utilise TLS
   auth: {
@@ -15,22 +15,29 @@ const transporter = nodemailer.createTransport({
   }
 });
 //fonction pour envoyer un mail
-const main = async (destinaire, sujet, contenu) => {
+const main = async (destinataire, sujet, contenu) => {
         // send mail with defined transport object
-        const info = await transporter.sendMail({
-        from: '"Divine Club" <karadev92@ikmail.com>', // sender address
-        to: destinaire,   //"bar@example.com, baz@example.com", // list of receivers
-        subject: sujet,   //"Hello ✔", // Subject line
-        text: contenu     //"Hello world?", // plain text body
-        //html: "<b>Hello world?</b>", // html body
-        });
-    
-        console.log("Message sent: %s", info.messageId);
-        // Message sent: <d786aa62-4e0a-070a-47ed-0b0666549519@ethereal.email>
+        try {
+            const info = await transporter.sendMail({
+                from: '"Divine Club" <karadev92@ikmail.com>', // sender address
+                to: destinataire,   //"bar@example.com, baz@example.com", // list of receivers
+                subject: sujet,   //"Hello ✔", // Subject line
+                text: contenu     //"Hello world?", // plain text body
+                //html: "<b>Hello world?</b>", // html body
+            });
+            
+            console.log("Message sent: %s", info.messageId);
+            // Message sent: <d786aa62-4e0a-070a-47ed-0b0666549519@ethereal.email>
+        } catch (error) {
+            console.log("Erreur d'envoi du mail : ", error);
+            throw new Error;
+        }
+
 };
 
 // Fonction pour trouver l'adresse mail et l'id d'un membre par son pseudo
 const findEmailAndIdByPseudo = async (pseudo) => {
+    console.log('pseudo', pseudo);
     return await Messagerie.findOne({ pseudo })
         .select("adresse_mail _id")
         .exec();
@@ -51,18 +58,24 @@ const recordMessage = async (expediteur, destinataire, sujet, contenu) => {
     const user = await Messagerie.findById(destinataire);
     user.messages.push(message);
     await user.save();
+    console.log('message sauvegardé : ', message);
 };
 
 //envoi de message et sauvegarde dans lz BDD
 export const sendMessage = async (req, res) => {
-    const { expediteur, destinaire, sujet, contenu } = req.body.message;
+    const expediteur = req.body.expediteur;
+    const destinataire = req.body.destinataire;
+    const sujet = req.body.sujet;
+    const contenu = req.body.contenu;
+
     const userId = req.userId;
+    
     try {
         const subject = "Nouveau message de " + expediteur + " sur Divine Club";
-        const content = "Bonjour " + destinaire + ",\n\n" + expediteur + " vous a envoyé un message sur Divine Club.\n\n\nCordialement,\n\nL'équipe Divine Club";
+        const content = "Bonjour " + destinataire + ",\n\n" + expediteur + " vous a envoyé un message sur Divine Club.\n\n\nCordialement,\n\nL'équipe Divine Club";
 
         //récupération adresse mail du destinataire
-        const target =  findEmailAndIdByPseudo(destinaire);
+        const target =  await findEmailAndIdByPseudo(destinataire);
 
         //envoi du mail
         await main(target.adresse_mail, subject, content);
@@ -77,4 +90,45 @@ export const sendMessage = async (req, res) => {
         res.status(500).send();
     }
 };
-  
+ 
+//pour récupérer la liste des messages et des amis
+export const getMessagesFriends = async (req, res) => {
+    const userId = req.userId;
+    try {
+        const listMessages = await Messagerie.findById(userId)
+        .select("amis messages -_id")
+        .populate([
+            {path: "amis", select: "pseudo -_id", sort: "pseudo"},
+            {path: "messages", select: "expediteur sujet contenu date lu -_id", sort: "-date"}
+        ])
+        .exec()
+
+        for (const element of listMessages.messages) {
+            const pseudoExp = await Profile.findById(element.expediteur)
+                .select("pseudo -_id")
+                .exec();
+            element.expediteur = pseudoExp;
+        }
+
+        console.log('listMessages et amis récupérées : ', listMessages);
+        res.status(200).send(listMessages);
+
+    } catch (error) {
+        console.log('problème BDD : ', err);
+        res.status(502).send();
+    }
+};
+
+//pour marquer un message comme lu
+export const markread = async (req, res) => {
+    const userId = req.userId;
+    try {
+        const message = await Message.findOne({destinataire: userId, date: req.body.message.date});
+        message.lu = true;
+        await message.save();
+        res.status(201).send(); 
+    } catch (error) {
+        console.log('problème BDD : ', err);
+        res.status(502).send();
+    }
+}

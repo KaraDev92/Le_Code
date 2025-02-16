@@ -84,7 +84,7 @@
                     <p>Votre mot de passe doit moins de 30 caractères</p>
                 }
                 @if(form.controls.password.touched && form.controls.password.errors['pattern']) {
-                    <p>Votre mot de passe doit comporter au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial</p>
+                    <p>Votre mot de passe doit comporter au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial, mais pas d'accentuation</p>
                 }
             }
         </div>
