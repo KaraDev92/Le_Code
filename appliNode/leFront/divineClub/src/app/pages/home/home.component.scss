@@ -66,3 +66,16 @@ span {
     align-content: center;
     justify-content: left;
 }
+
+a {
+    text-decoration: none;
+    color: var(--txt);
+}
+
+a:hover {
+    color: var(--txt-voyant);
+}
+
+ul {
+    list-style-type: none;
+}

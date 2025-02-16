@@ -12,7 +12,7 @@
             
             <div>
                 <label>Destinataire : </label>
-                <select name="recipientInput" aria-placeholder="Choisissez un ami" ngModel>
+                <select name="recipientInput" ngModel>
                     @for (ami of messageListSi().amis ; track ami.pseudo) {
                         <option value={{ami.pseudo}}>{{ ami.pseudo }}</option>
                     }
@@ -39,16 +39,16 @@
             <div class="unMessage">
             @if (!message.lu) {
                 <li class="messageNonLu " (click)="afficher('pourLire')" (click)="marquerLu(message)">
-                    De : {{ message.expediteur}}, le :  {{ message.date | date: 'medium'}}, sujet :  {{ message.sujet }}</li>
+                    <em>De :</em> {{ message.expediteur}}, <br><em>Le :</em>  {{ message.date | date: 'fullDate'}}, <br><em>Sujet :</em>  {{ message.sujet }}</li>
             }
             @else {
-                <li class="" (click)="afficher('pourLire')" (click)="marquerLu(message)">
-                    De : {{ message.expediteur}}, le :  {{ message.date | date: 'medium'}}, sujet :  {{ message.sujet }}</li>
+                <li class="" (click)="afficher('pourLire')">
+                    <em>De :</em> {{ message.expediteur}}, <br><em>Le :</em>  {{ message.date | date: 'fullDate'}}, <br><em>Sujet :</em>  {{ message.sujet }}</li>
             }
                 @if (afficheMessage) {
                     <ul>
-                    <li class="dateMessage">{{ message.date | date: 'medium'}}</li>
-                    <li class="contenuMessage">{{ message.contenu}}</li>
+                        <li class="dateMessage"><em>À :</em> {{ message.date | date: 'mediumTime'}}</li>
+                        <li class="contenuMessage">{{ message.contenu}}</li>
                     </ul>
                 }
             </div>  

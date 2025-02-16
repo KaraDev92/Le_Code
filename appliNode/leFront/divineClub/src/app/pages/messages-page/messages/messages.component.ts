@@ -27,17 +27,7 @@ export class MessagesComponent {
   afficheCreerMessage = false;
   afficheMessage = false;
 
-  marquerLu(message: Message) {
-    if(!message.lu) {
-      console.log('le message à cocher lu : ', message);
-      console.log('messageListSi : ', this.messageListSi());
-         // updater le signal
-         // this.messageListSi().messages.date.update()
-      this.messagesService.markRead(message);
 
-        //updater le compteur de messages non lus
-    }
-  }
 
   afficher(fenetre: string):void {
     if (fenetre === 'pourEcrire') {
@@ -63,6 +53,7 @@ export class MessagesComponent {
     this.messagesService.sendMessage(message).subscribe({
       next: () => {
         this.errorMessage = "Message envoyé";
+        form.reset();
       },
       error: (err) => {
         const erreur = String(err);
@@ -79,6 +70,15 @@ export class MessagesComponent {
     });
   }
 
+  //marquer un message comme lu
+  marquerLu(message: Message) {
+    
+    console.log('le message à cocher lu : ', message);
+    console.log('messageListSi : ', this.messageListSi());
+    this.messagesService.markRead(message).subscribe();
+      //updater le compteur de messages non lus
+  
+}
 
   ngOnInit(): void {
     //récupère les message du membre

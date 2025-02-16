@@ -25,7 +25,7 @@ export const signup = async (req, res) => {
     try {
         const user = await newUser.save();
         res.status(201).send();
-        console.log('User was registered successfully!');
+        console.log(`${req.body.peudo} was registered successfully!`);
     } catch (err) {
         res.status(502).send();
         console.log('erreur sauvegarde nouvel utilisateur : ', err);

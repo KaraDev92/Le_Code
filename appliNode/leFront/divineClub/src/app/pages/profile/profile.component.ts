@@ -55,6 +55,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
   deleteFriend(ami: string) {
     const amiRecherche: { pseudo: string } = { pseudo: ami };
     this.subscription3 = this.dataXchange.deleteFriend(amiRecherche).subscribe({
+      next:() => {
+        this.errorMessage = ami + " a été supprimé de vos amis.";
+      },
       error: (err) => {
         const erreur = String(err);
         if (erreur === "Error: 502") {
@@ -112,6 +115,17 @@ export class ProfileComponent implements OnInit, OnDestroy {
   
     form.reset();
   }
+
+  deletePost(date: Date) {
+    this.dataXchange.deletePost(date).subscribe({
+      error: (err) => {
+        const erreur = String(err);
+        if (erreur === "Error: 502") {
+          this.errorMessage = "Nous rencontrons un problème, veuillez réessayer plus tard ...";
+        }
+      }
+    })
+  };
 
   ngOnInit(): void {
     //récupère les données de member

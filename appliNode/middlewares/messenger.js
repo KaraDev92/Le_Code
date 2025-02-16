@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import 'dotenv/config';
-import { Message, Messagerie } from '../mongoDB/lesShemas.js';
+import { Message, Messagerie, Profil } from '../mongoDB/lesShemas.js';
 
 const mailpassword = process.env.MAILPASSWORD;
 
@@ -83,7 +83,7 @@ export const sendMessage = async (req, res) => {
         //enregistrement du message chez le destinataire et dans la collection messages
         await recordMessage(userId, target._id, sujet, contenu);
 
-        res.status(201).send('Message envoyé');
+        res.status(201).send();
 
     } catch (error) {
         console.log('Erreur lors de l\'envoi du mail : ', error);
@@ -101,20 +101,24 @@ export const getMessagesFriends = async (req, res) => {
             {path: "amis", select: "pseudo -_id", sort: "pseudo"},
             {path: "messages", select: "expediteur sujet contenu date lu -_id", sort: "-date"}
         ])
+        .lean()
         .exec()
 
-        for (const element of listMessages.messages) {
-            const pseudoExp = await Profile.findById(element.expediteur)
+        
+        //for...of pour l'asynchrone
+        for (let element of listMessages.messages) {
+            const pseudoExp = await Profil.findById(element.expediteur)
                 .select("pseudo -_id")
+                .lean()
                 .exec();
-            element.expediteur = pseudoExp;
+            element.expediteur = pseudoExp.pseudo;
         }
 
         console.log('listMessages et amis récupérées : ', listMessages);
         res.status(200).send(listMessages);
 
     } catch (error) {
-        console.log('problème BDD : ', err);
+        console.log('problème BDD : ', error);
         res.status(502).send();
     }
 };
@@ -123,12 +127,26 @@ export const getMessagesFriends = async (req, res) => {
 export const markread = async (req, res) => {
     const userId = req.userId;
     try {
-        const message = await Message.findOne({destinataire: userId, date: req.body.message.date});
+        const message = await Message.findOne({destinataire: userId, date: req.body.date});
         message.lu = true;
         await message.save();
         res.status(201).send(); 
     } catch (error) {
-        console.log('problème BDD : ', err);
+        console.log('problème BDD : ', error);
         res.status(502).send();
+    }
+};
+
+export const warnExFriend = async (expediteur, destinataire, destinataireEMail) => {
+    try {
+        console.log('email desti : ', destinataireEMail);
+        const sujet = "Action de " + expediteur + " sur Divine Club";
+        const contenu = "Bonjour " + destinataire + ",\n\n" + expediteur + " vous a supprimé de ses amis sur Divine Club.\n\n\nCordialement,\n\nL'équipe Divine Club";
+
+        //envoi du mail
+        await main(destinataireEMail, sujet, contenu);
+
+    } catch (error) {
+        console.log('Erreur lors de l\'envoi du mail (fin amitié) à l\'ex-ami : ', error);
     }
 }

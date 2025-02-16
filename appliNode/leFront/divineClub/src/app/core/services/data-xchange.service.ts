@@ -106,18 +106,33 @@ export class DataXchangeService {
 
   //supprimer un ami
   deleteFriend(amiRecherche: { pseudo: string }): Observable<Member> {
-    console.log('pseudo recherché : ', amiRecherche);
-    this.member.update((member) => {
-      member.amis = member.amis.filter((ami) => ami.pseudo !== amiRecherche.pseudo);
-      return member;
-    });
+    console.log('pseudo ami à supprimer : ', amiRecherche);
     return this.http.put<Member>(this.rootURL + '/deletefriend', amiRecherche).pipe(
+      tap(() => {
+        this.member.update((member) => {
+          member.amis = member.amis.filter((ami) => ami.pseudo !== amiRecherche.pseudo);
+          return member;
+        });
+      }),
       catchError (error => {
         console.log('Erreur de suppression d\'ami : ', error);
         throw new Error(error);
       })
     )
   };
+
+  deletePost(ladate: Date): Observable<Member> {
+    const post = {date: ladate};
+    return this.http.put<Member>(this.rootURL + "/deletepost", post).pipe(
+      tap(() => {
+        this.member.update((member) => {
+          member.mur = member.mur.filter((post) => post.date !== ladate);
+          return member;
+        })
+      }
+      )
+    )
+  } 
 
   
   // DELETE - Supprimer son compte

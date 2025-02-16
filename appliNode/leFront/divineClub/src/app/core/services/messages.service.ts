@@ -46,6 +46,10 @@ export class MessagesService {
 
   //marquer un message comme lu
   markRead(message: Message): Observable<Message> {
+    this.messagesList.update((messagesList) => {
+      messagesList.messages = messagesList.messages.filter((mess) => mess.date !== message.date);
+      return messagesList;
+    });
     return this.http.put<Message>(this.rootURL + '/markread', message).pipe(
       catchError (error => {
         console.log('Erreur de marquage du message comme lu : ', error);

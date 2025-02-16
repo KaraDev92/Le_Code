@@ -22,7 +22,7 @@ export class CreateAccountComponent {
   formBuilder = new FormBuilder().nonNullable;
 
   form = this.formBuilder.group({
-    pseudo: new FormControl('', [Validators.required, Validators.minLength(5)], [pseudoExists()]),
+    pseudo: new FormControl('', [Validators.required, Validators.minLength(4)], [pseudoExists()]),
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(8),

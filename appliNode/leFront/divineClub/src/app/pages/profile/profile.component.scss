@@ -10,6 +10,15 @@ section {
     gap: 1rem;
 }
 
+.avatar {
+    background-image: url(../../../../public/avatar.jpg);
+    border-radius: 10px;
+    width: 10%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 .identite,
 .posts,
 .amis {
@@ -140,6 +149,13 @@ button {
 .poubelle:hover {
     cursor: pointer;
 }
+.poubelle {
+    height: 1.1rem;
+}
+ .ligneAmi {
+    display: flex;
+    gap: 1rem;
+ }
 
 .ng-valid:not(form) {
     border: 2px solid green;

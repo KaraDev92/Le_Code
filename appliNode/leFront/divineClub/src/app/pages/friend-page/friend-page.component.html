@@ -25,7 +25,7 @@
       <h2>Amis</h2>
       <ul>
         @for (ami of friendSi().amis ; track ami.pseudo) {
-        <!-- insérer si ami est connecté en convertissant en couleur -->
+        <!-- insérer si ami est connecté en convertissant la couleur -->
           <li class="demande" (click)="goToFriendPage(ami.pseudo)">{{ ami.pseudo }}</li>
         }          
       </ul>

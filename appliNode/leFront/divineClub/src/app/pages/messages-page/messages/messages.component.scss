@@ -12,18 +12,6 @@ section {
     gap: 1rem;
 }
 
-.menuProfil {
-    display: flex;
-    flex-direction: column;
-    font-size: 2rem;
-    font-weight: 700;
-    padding-bottom: 1.5rem;
-}
-
-.menuProfil a {
-    color: var(--txt-titre);
-    padding-bottom: 1.5rem;
-}
 
 h2 {
     font-size: 2rem;
@@ -36,10 +24,6 @@ span {
     font-style: italic;
 }
 
-.menuProfil a:hover {
-    color: var(--txt-voyant);
-}
-
 ul {
     list-style-type: none;
 }
@@ -50,6 +34,9 @@ ul {
     border-radius: 10px;
     margin-bottom: 0.5rem;
 }
+.unMessage:hover {
+    cursor: pointer;
+}
 
 .contenuMessage {
     font-size: 1.1rem;
@@ -59,6 +46,10 @@ ul {
     font-style: italic;
     font-weight: 500;
     font-size: 1rem;
+}
+em {
+    font-weight: 500;
+    font-style: normal;
 }
 
 .separateur {
@@ -74,17 +65,19 @@ ul {
 button {
     background-color: var(--bouton);
     color: black;
-    padding: 0rem 1.5rem;
+    padding: 0.5rem 1.5rem;
     cursor: pointer;
     width: 8rem;
     border-radius: 20px;
     border: 1px solid var(--fond);
+    margin-top: 0.5rem;
+    font-size: 1.1rem;
 }
 
 input, 
 textarea,
 select {
-    padding: 1rem;
+    padding: 0.5rem;
     margin: 0.5rem 2rem;
     background-color: var(--fond-form);
     border: 1px solid var(--fond);
@@ -97,4 +90,8 @@ input {
 textarea {
     width: 25rem;
     height: 5rem;
+}
+
+.messageNonLu {
+    color: var(--txt-voyant);
 }

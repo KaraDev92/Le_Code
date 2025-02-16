@@ -1,7 +1,8 @@
 //pour répondre aux requêtes HTTP de données dans la BDD
 
-import { Profil, Post, Friend } from "../mongoDB/lesShemas.js";
+import { Profil, Friend } from "../mongoDB/lesShemas.js";
 import mongoose from "mongoose";
+import { warnExFriend } from "../middlewares/messenger.js";
 
 //pour récupérer les données de son profil
 export const dataForProfile = async (req, res) => {
@@ -21,31 +22,6 @@ export const dataForProfile = async (req, res) => {
         res.status(502).send();
     }
 };
-
-//pour enregistrer un nouveau post
-export const newPost = async (req, res) => {
-    const userId = req.userId;
-    const date = new Date();
-    try {
-        const post = new Post({
-            _id: new mongoose.Types.ObjectId(),
-            titre: req.body.titre,
-            contenu: req.body.contenu,
-            date: date,
-            auteur: userId
-        });
-        
-        await post.save();
-          
-        const user = await Profil.findById(userId);
-        user.mur.push(post);
-        await user.save();
-        res.status(201).send();
-    } catch (err) {
-        console.log('problème BDD : ', err);
-        res.status(502).send();
-    }
-}
 
 // Fonction pour trouver un membre par pseudo
 const findMemberByPseudo = async (pseudo) => {
@@ -102,3 +78,40 @@ export const searchForAMember = async (req, res) => {
         res.status(502).send();
     }
 };
+
+//fonction pour supprimer un ami
+export const deleteFriend = async (req,res) => {
+    const userId = req.userId;
+
+    try {
+        const user = await Profil.findById(userId)
+            .select("pseudo amis")
+            .lean()
+            .exec();
+        const exAmi = await Profil.findOne(req.body)
+            .select("adresse_mail amis")
+            .lean()
+            .exec();
+
+        const newListFriendsUser = user.amis.filter((ami) => String(ami._id) !== String(exAmi._id));
+        const newListFriendsEx = exAmi.amis.filter((ami) => String(ami._id) !== String(userId));
+
+        const cursorUser = await Profil.findById(userId);
+        const cursorExAmi = await Profil.findOne(req.body);
+
+        cursorUser.amis = newListFriendsUser;
+        await cursorUser.save();
+
+        cursorExAmi.amis = newListFriendsEx;
+        await cursorExAmi.save();
+
+        warnExFriend(user.pseudo, req.body.pseudo, exAmi.adresse_mail);
+
+        res.status(201).send();
+
+    } catch (error) {
+        console.log("Erreur dans la suppression de l'ami : ", error);
+        res.status(502).send();
+    }
+};
+
