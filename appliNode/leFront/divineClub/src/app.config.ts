@@ -22,6 +22,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptors([authInterceptor])
     ),
-    { provide: ROOT_URL, useValue: 'https://karadev--divine-club--m6tyjvjtlvvw.code.run/' } 
+    { provide: ROOT_URL, useValue: 'https://karadev--divine-club--m6tyjvjtlvvw.code.run' } 
   ]
 };
