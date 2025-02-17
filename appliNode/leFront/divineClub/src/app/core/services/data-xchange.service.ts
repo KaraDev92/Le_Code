@@ -121,6 +121,7 @@ export class DataXchangeService {
     )
   };
 
+  //requête pour effacer un post
   deletePost(ladate: Date): Observable<Member> {
     const post = {date: ladate};
     return this.http.put<Member>(this.rootURL + "/deletepost", post).pipe(
@@ -129,10 +130,9 @@ export class DataXchangeService {
           member.mur = member.mur.filter((post) => post.date !== ladate);
           return member;
         })
-      }
-      )
+      })
     )
-  } 
+  }; 
 
   
   // DELETE - Supprimer son compte

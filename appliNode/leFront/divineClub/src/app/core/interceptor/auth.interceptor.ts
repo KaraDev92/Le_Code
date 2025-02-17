@@ -4,6 +4,7 @@ import { Observable, catchError, tap } from 'rxjs';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 
+//intercepteur de requêtes HTPP sortantes : rajoute le token d'authentification s'il existe
 export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
   const auth = inject(AuthService);
   const router = inject(Router);

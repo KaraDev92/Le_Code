@@ -14,13 +14,15 @@ const TOKEN_KEY = 'angular-token';
 @Injectable({
   providedIn: 'root'
 })
+
+//Service de gestion du token d'authentification
 export class AuthService {
   private http = inject(HttpClient);
   private readonly rootUrl = inject(ROOT_URL);
   token = signal('');
 
   constructor() { 
-     this.token.set(localStorage.getItem(TOKEN_KEY) ?? '')
+    this.token.set(localStorage.getItem(TOKEN_KEY) ?? '')
   };
 
   //fonction de login

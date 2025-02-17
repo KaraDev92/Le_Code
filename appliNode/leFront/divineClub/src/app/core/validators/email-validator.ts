@@ -5,7 +5,7 @@ import { ROOT_URL } from '../../../app.config';
 import { catchError, Observable} from 'rxjs';
 
 
-
+//validateur asynchrone qui vérifie si l'email existe déjà dans la BDD
 export function emailExists(): AsyncValidatorFn {
     const http = inject(HttpClient);
     const rootUrl = inject(ROOT_URL);

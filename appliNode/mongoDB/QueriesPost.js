@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { Post, Profil } from "../mongoDB/lesShemas.js";
 
+//pour effacer un post
 export const deletePost = async (req, res) => {
     const ladate = req.body.date;
     const userId = req.userId;

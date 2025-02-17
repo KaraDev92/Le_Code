@@ -1,5 +1,6 @@
 import { AbstractControl } from '@angular/forms';
 
+//validateur d'adresse mail : pas de boite jetable
 const trashEmailAddress: Array<string> = [
      'yopmail.com',  
      'jetable.org',  
@@ -14,6 +15,3 @@ const trashEmailAddress: Array<string> = [
 export function domainValidator(control: AbstractControl<string>): { invalidDomain: boolean } | null {
      return trashEmailAddress.some(host => control.value.endsWith(host)) ? {invalidDomain: true} : null;
 }
-// export function domainValidator(control: AbstractControl<string>): { invalidDomain: boolean } | null {
-//     return control.value.endsWith('gmail.com') ? {invalidDomain: true}: null;
-// }

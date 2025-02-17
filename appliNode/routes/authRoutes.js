@@ -4,7 +4,7 @@ import { verifySignUp, verifyEmail, verifyPseudo } from "../middlewares/verifySi
 import { signup, signin } from "../controllers/authController.js";
 import { verifyToken } from "../middlewares/authJwt.js";
 import { dataForProfile, searchForAMember, deleteFriend } from "../mongoDB/DBQueries.js";
-import { sendMessage, getMessagesFriends, markread } from "../middlewares/messenger.js";
+import { sendMessage, getMessagesFriends, markread, deleteMessage } from "../middlewares/messenger.js";
 import { newPost, deletePost } from "../mongoDB/QueriesPost.js";
 
 
@@ -48,7 +48,10 @@ export const authRouter = (app) => {
     app.put("/deletefriend", verifyToken, deleteFriend);
 
     //pour supprimer un post
-    app.put("/deletepost", passerParLa, verifyToken, deletePost);
+    app.put("/deletepost", verifyToken, deletePost);
+
+    //pour supprimer un message
+    app.put("/deletemessage", passerParLa, verifyToken, deleteMessage);
 
     //pour les nouveaux membres
     app.post("/newuser", verifySignUp, signup);

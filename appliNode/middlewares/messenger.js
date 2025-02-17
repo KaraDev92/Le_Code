@@ -14,6 +14,7 @@ const transporter = nodemailer.createTransport({
     pass: mailpassword,
   }
 });
+
 //fonction pour envoyer un mail
 const main = async (destinataire, sujet, contenu) => {
         // send mail with defined transport object
@@ -61,7 +62,7 @@ const recordMessage = async (expediteur, destinataire, sujet, contenu) => {
     console.log('message sauvegardé : ', message);
 };
 
-//envoi de message et sauvegarde dans lz BDD
+//envoi de message et sauvegarde dans la BDD
 export const sendMessage = async (req, res) => {
     const expediteur = req.body.expediteur;
     const destinataire = req.body.destinataire;
@@ -98,13 +99,12 @@ export const getMessagesFriends = async (req, res) => {
         const listMessages = await Messagerie.findById(userId)
         .select("amis messages -_id")
         .populate([
-            {path: "amis", select: "pseudo -_id", sort: "pseudo"},
-            {path: "messages", select: "expediteur sujet contenu date lu -_id", sort: "-date"}
+            {path: "amis", select: "pseudo -_id", options: { sort: { pseudo: 1 }}},
+            {path: "messages", select: "expediteur sujet contenu date lu -_id", options: { sort: { date: -1 }}}
         ])
         .lean()
-        .exec()
+        .exec();
 
-        
         //for...of pour l'asynchrone
         for (let element of listMessages.messages) {
             const pseudoExp = await Profil.findById(element.expediteur)
@@ -114,7 +114,6 @@ export const getMessagesFriends = async (req, res) => {
             element.expediteur = pseudoExp.pseudo;
         }
 
-        console.log('listMessages et amis récupérées : ', listMessages);
         res.status(200).send(listMessages);
 
     } catch (error) {
@@ -137,9 +136,9 @@ export const markread = async (req, res) => {
     }
 };
 
+//pour envoyer un message de suppression d'amitié
 export const warnExFriend = async (expediteur, destinataire, destinataireEMail) => {
     try {
-        console.log('email desti : ', destinataireEMail);
         const sujet = "Action de " + expediteur + " sur Divine Club";
         const contenu = "Bonjour " + destinataire + ",\n\n" + expediteur + " vous a supprimé de ses amis sur Divine Club.\n\n\nCordialement,\n\nL'équipe Divine Club";
 
@@ -149,4 +148,46 @@ export const warnExFriend = async (expediteur, destinataire, destinataireEMail) 
     } catch (error) {
         console.log('Erreur lors de l\'envoi du mail (fin amitié) à l\'ex-ami : ', error);
     }
-}
+};
+
+//pour effacer un message
+export const deleteMessage = async (req, res) => {
+    const ladate = req.body.date;
+    const userId = req.userId;
+
+    try {
+        const user = await Messagerie.findById(userId)
+            .select("messages")
+            .lean()
+            .exec();
+
+        const lemessage = await Message.findOne({date : ladate});
+            
+        const newListMessages = user.messages.filter((mess) => String(mess._id) !== String(lemessage._id));
+            
+        const cursorUser = await Messagerie.findById(userId);
+        
+        cursorUser.messages = newListMessages;
+        await cursorUser.save();
+
+        await lemessage.deleteOne();
+
+        res.status(200).send();
+
+    } catch (error) {
+        console.log("Erreur dans la suppression du message : ", error);
+        res.status(502).send();
+    }
+};
+
+//pour envoyer un message de bienvenu (pour un nouvel inscrit)
+export const welcomeMail = async (email, pseudo) => {
+    const sujet = "Bienvenu au Divine Club";
+    const contenu = `Bonjour ${pseudo}, \n\nNous sommes heureux de vous accueillir au sein de notre communauté d'êtres exceptionnels. \nVous aurez la possibilité de communiquer avec vos amis et aussi de faire de nouvelles rencontres.\n\n\nCordialement,\n\nL'équipe Divine Club`;
+
+    try {
+        await main(email, sujet, contenu);
+    } catch (error) {
+        console.log('Erreur lors de l\'envoi du mail de bienvenu : ', error);
+    }  
+};

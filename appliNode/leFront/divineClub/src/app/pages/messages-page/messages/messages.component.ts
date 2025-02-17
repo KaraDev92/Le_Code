@@ -8,6 +8,7 @@ import { DatePipe } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { FormsModule, NgForm } from '@angular/forms';
 
+//page Messages
 @Component({
   selector: 'app-messages',
   standalone: true,
@@ -27,8 +28,6 @@ export class MessagesComponent {
   afficheCreerMessage = false;
   afficheMessage = false;
 
-
-
   afficher(fenetre: string):void {
     if (fenetre === 'pourEcrire') {
       this.afficheCreerMessage = !this.afficheCreerMessage;
@@ -36,7 +35,7 @@ export class MessagesComponent {
     if (fenetre === 'pourLire') {
       this.afficheMessage = !this.afficheMessage;
     }
-  }
+  };
 
   //envoyer un message
   sendMessage(form: NgForm) {
@@ -48,7 +47,6 @@ export class MessagesComponent {
       date: new Date(),
       lu: false
     }
-    console.log('message à envoyer : ', message);
 
     this.messagesService.sendMessage(message).subscribe({
       next: () => {
@@ -72,13 +70,21 @@ export class MessagesComponent {
 
   //marquer un message comme lu
   marquerLu(message: Message) {
-    
-    console.log('le message à cocher lu : ', message);
-    console.log('messageListSi : ', this.messageListSi());
     this.messagesService.markRead(message).subscribe();
-      //updater le compteur de messages non lus
-  
-}
+    //updater le compteur de messages non lus
+  };
+
+  //pour effacer un message
+  deleteMessage(date: Date) {
+    this.messagesService.deleteMessage(date).subscribe({
+      error: (err) => {
+        const erreur = String(err);
+        if (erreur === "Error: 502") {
+          this.errorMessage = "Nous rencontrons un problème, veuillez réessayer plus tard ...";
+        }
+      }
+    })
+  };
 
   ngOnInit(): void {
     //récupère les message du membre

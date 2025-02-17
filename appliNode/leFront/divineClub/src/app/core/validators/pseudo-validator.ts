@@ -4,6 +4,7 @@ import { inject } from '@angular/core';
 import { ROOT_URL } from '../../../app.config';
 import { catchError, Observable } from 'rxjs';
 
+//validateur asynchrone qui vérifie si le pseudo existe déjà dans le BDD
 export function pseudoExists(): AsyncValidatorFn {
     const http = inject(HttpClient);
     const rootUrl = inject(ROOT_URL);

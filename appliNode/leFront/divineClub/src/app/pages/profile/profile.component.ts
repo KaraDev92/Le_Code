@@ -7,7 +7,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { Post } from '../../core/interfaces/post';
 import { RouterLink } from '@angular/router';
 
-
+//page de profil
 @Component({
   selector: 'app-profile',
   standalone: true,
@@ -21,13 +21,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
   private subscription2!: Subscription;
   private subscription3!: Subscription;
 
-
   //variable memberSi est un signal
   memberSi = this.dataXchange.member;
   errorMessage: string = '';
   afficheCreerPost = false;
   afficheRechercherAmi = false;
   
+  //gestion affichage de fenêtres
   afficher(fenetre: string):void {
     if (fenetre === 'pourAmi') {
       this.afficheRechercherAmi = !this.afficheRechercherAmi;
@@ -37,6 +37,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
   }
 
+  //pour aller sur la page d'un ami ou autre membre
   goToFriendPage(ami: string) {
     const amiRecherche = {pseudo: ami};
     this.subscription3 = this.dataXchange.searchFriend(amiRecherche).subscribe({
@@ -52,6 +53,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     });
   };
 
+  //pour supprimer un ami
   deleteFriend(ami: string) {
     const amiRecherche: { pseudo: string } = { pseudo: ami };
     this.subscription3 = this.dataXchange.deleteFriend(amiRecherche).subscribe({
@@ -70,6 +72,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     });
   };
 
+  //pour chercher un ami ou un autre membre
   searchFriend(form: NgForm) {
     console.log('membre recherché : ', form.value.searchFriendInput);
     if (form.invalid) {
@@ -91,6 +94,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     });
   }
 
+  //pour envoyer un post sur son mur
   poster(form: NgForm) {
     console.log('post :', form.value.titrePostInput, form.value.txtPostInput);
     const newPost: Post = {
@@ -116,6 +120,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     form.reset();
   }
 
+  //pour effacer un post de son mur
   deletePost(date: Date) {
     this.dataXchange.deletePost(date).subscribe({
       error: (err) => {

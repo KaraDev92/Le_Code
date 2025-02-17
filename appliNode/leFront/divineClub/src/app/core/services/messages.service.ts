@@ -47,7 +47,12 @@ export class MessagesService {
   //marquer un message comme lu
   markRead(message: Message): Observable<Message> {
     this.messagesList.update((messagesList) => {
-      messagesList.messages = messagesList.messages.filter((mess) => mess.date !== message.date);
+      messagesList.messages = messagesList.messages.map((mess) => {
+        if (mess.date === message.date) {
+          mess.lu = true;
+        }
+        return mess;
+      });
       return messagesList;
     });
     return this.http.put<Message>(this.rootURL + '/markread', message).pipe(
@@ -56,7 +61,20 @@ export class MessagesService {
         throw new Error(error);
       })
     )
-  }
+  };
+
+  //requête pour effacer un message
+  deleteMessage(ladate: Date): Observable<Message> {
+    const message = {date: ladate};
+    return this.http.put<Message>(this.rootURL + "/deletemessage", message).pipe(
+      tap(() => {
+        this.messagesList.update((messageList) => {
+          messageList.messages = messageList.messages.filter((mess) => mess.date !== ladate);
+          return messageList;
+        })
+      })        
+    )
+  }; 
   
   constructor() { }
 }

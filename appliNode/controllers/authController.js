@@ -5,6 +5,7 @@ import { NewMember, Login, Profil } from '../mongoDB/lesShemas.js';
 //import { sign } from 'jsonwebtoken'; //module en CommonJS !
 import bcrypt from 'bcryptjs';   //module en CommonJS !
 import pkg2 from 'jsonwebtoken';
+import { welcomeMail } from '../middlewares/messenger.js';
 const { sign } = pkg2;
 
 //pour créer un nouveau membre (sans fournir de token)
@@ -24,6 +25,9 @@ export const signup = async (req, res) => {
 
     try {
         const user = await newUser.save();
+        //envoi mail de bienvenu
+        welcomeMail(req.body.email, req.body.pseudo);
+
         res.status(201).send();
         console.log(`${req.body.peudo} was registered successfully!`);
     } catch (err) {

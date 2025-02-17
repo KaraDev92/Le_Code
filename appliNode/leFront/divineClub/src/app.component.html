@@ -1,16 +1,18 @@
 
 
 <header class="header">
-  <div class="logo"></div>  
-  <a class="title"  routerLink="/">{{ title }}</a> 
-  
-  @if (connected()) {
-    <app-navbar-in></app-navbar-in>
-  }
-  @else {
-    <app-navbar-out></app-navbar-out>
-  }
-  
+  <div class="lineOne">
+    <div class="logo"></div>
+    <a class="title"  routerLink="/">{{ title }}</a> 
+  </div> 
+  <div>
+    @if (connected()) {
+      <app-navbar-in></app-navbar-in>
+    }
+    @else {
+      <app-navbar-out></app-navbar-out>
+    }
+  </div>
 </header>
 
 <main class="main">

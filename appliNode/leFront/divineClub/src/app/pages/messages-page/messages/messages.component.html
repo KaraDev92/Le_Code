@@ -49,6 +49,7 @@
                     <ul>
                         <li class="dateMessage"><em>À :</em> {{ message.date | date: 'mediumTime'}}</li>
                         <li class="contenuMessage">{{ message.contenu}}</li>
+                        <img src="/poubelle.png" (click)="deleteMessage(message.date)" class="poubelle">
                     </ul>
                 }
             </div>  
