@@ -21,7 +21,7 @@ const corsOptions = {
   
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
-app.use(express.static(process.cwd()+"/leFront/divineClub/dist/divine-club/brownser")); 
+app.use(express.static(process.cwd()+"/appliNode/leFront/divineClub/dist/divine-club/brownser")); 
 //A compléter pour lancer Angular depuis Node 
 
 // parse requests of content-type - application/x-www-form-urlencoded
@@ -47,7 +47,7 @@ userRouter(app);
 //page d'accueil  
 app.get('/', (req,res) => {
     //res.send('App Works !');
-    res.sendFile(process.cwd()+"/leFront/divineClub/dist/divine-club/brownser/index.html");
+    res.sendFile(process.cwd()+"/appliNode/leFront/divineClub/dist/divine-club/brownser/index.html");
 });
   
 app.listen(port, () => {
