@@ -27,7 +27,8 @@ export class DataXchangeService {
     amis: [{pseudo: '', pantheon: '', type_deite: '', amis: [], mur: [], presentation: ''}],
     mur:[{auteur:'', date: new Date(), titre:'', contenu:''}],
     date_derniere_connexion: new Date(),
-    presentation: ''
+    presentation: '',
+    req_ami:[{pseudo:''}]
   });
   
   friend = signal<Friend>({
@@ -134,6 +135,24 @@ export class DataXchangeService {
     )
   }; 
 
+  //réponse à une demande d'ami
+  respondFriendship(reponse: {rep: boolean, pseudo: string}): Observable<Member> {
+    return this.http.put<Member>(this.rootURL + "/responsefriend", reponse).pipe(
+      tap(() => {
+        if (reponse.rep) {
+          this.member.update((member) => {
+            member.amis = member.amis.push({pseudo: reponse.pseudo});
+            return member;
+          })
+        } else {
+          this.member.update((member) => {
+            member.req_ami = member.req_ami.filter((req) => req.pseudo !== reponse.pseudo);
+            return member;
+          })
+        }
+      })
+    )
+  }
   
   // DELETE - Supprimer son compte
   // deleteMember(pseudo: string): Observable<void> {

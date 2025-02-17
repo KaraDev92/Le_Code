@@ -76,5 +76,15 @@ export class MessagesService {
     )
   }; 
   
+  //demande d'ami
+  askForFriend(amiDemande: string): Observable<Message> {
+    const demande = {pseudo: amiDemande};
+    return this.http.post<Message>(this.rootURL + '/askfriend', demande).pipe(
+      catchError (error => {
+        console.log('Erreur de la demande d\'ami : ', error);
+        throw new Error(error);
+      }))
+  };
+
   constructor() { }
 }

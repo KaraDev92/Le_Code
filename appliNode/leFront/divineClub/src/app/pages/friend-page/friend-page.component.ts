@@ -45,6 +45,19 @@ export class FriendPageComponent {
     });
   };
 
-  
+  //demande d'ami
+  askForFriend(amiDemande: string) {
+    this.messagesService.askForFriend(amiDemande).subscribe({
+      next:() => {
+        this.errorMessage = "Nous avons envoyé votre requête d'amitié à " + amiDemande + ".";
+      },
+      error: (err) => {
+      const erreur = String(err);
+        if (erreur === "Error: 502") {
+          this.errorMessage = "Nous rencontrons un problème, veuillez réessayer plus tard ...";
+        }
+      }
+    })
+  };
 
 }

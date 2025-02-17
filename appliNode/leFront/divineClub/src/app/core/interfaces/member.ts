@@ -10,4 +10,5 @@ export interface Member {
     amis: Array<Friend>;
     mur: Array<Post>;
     date_derniere_connexion: Date;
+    req_ami: Array<{pseudo: string}>;
 }

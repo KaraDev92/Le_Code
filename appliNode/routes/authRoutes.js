@@ -51,7 +51,7 @@ export const authRouter = (app) => {
     app.put("/deletepost", verifyToken, deletePost);
 
     //pour supprimer un message
-    app.put("/deletemessage", passerParLa, verifyToken, deleteMessage);
+    app.put("/deletemessage", verifyToken, deleteMessage);
 
     //pour les nouveaux membres
     app.post("/newuser", verifySignUp, signup);
@@ -62,5 +62,6 @@ export const authRouter = (app) => {
     //pour chercher un membre
     app.post("/searchmember", verifyToken, searchForAMember);
 
-
+    //pour une demande d'amitié
+    app.post("/askfriend", passerParLa, verifyToken);
 };

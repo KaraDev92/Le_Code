@@ -28,6 +28,15 @@
 
     <div class="amis">
       <h2>Amis</h2>
+      @if(memberSi().req_ami) {
+        @for(req of memberSi().req_ami ; track req.pseudo) {
+          <div>
+            <p>{{req.pseudo}} vous a demandé d'être amis.</p>
+            <button (click)="respondFriendship(true, req.pseudo)">Accepter</button>
+            <button (click)="respondFriendship(false, req.pseudo)">Accepter</button>
+          </div>
+        }
+      }
       <label class="demandes" (click)="afficher('pourAmi')">&#10518;  Chercher un membre : </label>
       @if(afficheRechercherAmi) {
         <form class="recherche" (ngSubmit)="searchFriend(unAmi)" #unAmi="ngForm">

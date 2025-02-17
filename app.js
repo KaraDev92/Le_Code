@@ -15,7 +15,8 @@ const app = express();
 const port = process.env.PORT;
 
 const corsOptions = {
-    origin: "https://karadev--divine-club--m6tyjvjtlvvw.code.run/"
+    //origin: "https://karadev--divine-club--m6tyjvjtlvvw.code.run/"
+    origin: "http://localhost:4200/"
 };
 
   

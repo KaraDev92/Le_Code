@@ -91,6 +91,25 @@ export class ProfileComponent implements OnInit, OnDestroy {
           this.errorMessage = "Ami non trouvé";
         }
       }
+    })
+  };
+
+  //pour répondre aux demandes d'amitié
+  respondFriendship(answer: boolean, pseudoD: string) {
+    const response = {rep : answer, pseudo: pseudoD};
+    this.dataXchange.respondFriendship(response).subscribe({
+      next:() => {
+        this.errorMessage = "Votre réponse a été envoyée.";
+      },
+      error: (err) => {
+        const erreur = String(err);
+        if (erreur === "Error: 502") {
+          this.errorMessage = "Nous rencontrons un problème, veuillez réessayer plus tard ...";
+        }
+        if (erreur === "Error: 418") {
+          this.errorMessage = "Ami non trouvé";
+        }
+      }
     });
   }
 

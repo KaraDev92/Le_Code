@@ -9,10 +9,12 @@ export const dataForProfile = async (req, res) => {
     const userId = req.userId;
     try {
         const user = await Profil.findById(userId)
-        .select("pseudo pantheon type_deite amis mur date_derniere_connexion presentation -_id")
+        .select("pseudo pantheon type_deite amis mur date_derniere_connexion presentation req_ami -_id")
         .populate([
             {path: "amis", select:"pseudo -_id"}, 
-            {path: "mur",select: "date titre contenu -_id"}])
+            {path: "mur",select: "date titre contenu -_id"},
+            {path: "req_ami", select: "pseudo"}
+        ])
         .exec();
         
         res.status(200).send(user);

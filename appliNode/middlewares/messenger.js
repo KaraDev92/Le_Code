@@ -38,7 +38,6 @@ const main = async (destinataire, sujet, contenu) => {
 
 // Fonction pour trouver l'adresse mail et l'id d'un membre par son pseudo
 const findEmailAndIdByPseudo = async (pseudo) => {
-    console.log('pseudo', pseudo);
     return await Messagerie.findOne({ pseudo })
         .select("adresse_mail _id")
         .exec();
@@ -59,7 +58,6 @@ const recordMessage = async (expediteur, destinataire, sujet, contenu) => {
     const user = await Messagerie.findById(destinataire);
     user.messages.push(message);
     await user.save();
-    console.log('message sauvegardé : ', message);
 };
 
 //envoi de message et sauvegarde dans la BDD
@@ -191,3 +189,31 @@ export const welcomeMail = async (email, pseudo) => {
         console.log('Erreur lors de l\'envoi du mail de bienvenu : ', error);
     }  
 };
+
+//envoi mail requête amitié en enregistrement requête dans BDD
+export const askForFriend = async (req,res) => {
+    const userId = req.userId;
+    const pseudoAmi = req.body.pseudo;
+    const sujet = "Demande d'amitié";
+
+    try {
+        const amiDemande = await findEmailAndIdByPseudo(pseudoAmi); //adresse_mail et _id schema Messagerie
+        const user = await Messagerie.findById(userId)
+            .select("pseudo")
+            .exec();
+        
+        const contenu = `Bonjour ${pseudoAmi}, \n\nVous avez reçu une demande d'amitié de la part de ${user.pseudo}.\n\n\nCordialement,\n\nL'équipe Divine Club`;
+
+        await main(amiDemande.adresse_mail, sujet, contenu);
+        
+        const receveur = await Profil.findById(amiDemande._id);
+        receveur.req_ami.push(userId);
+        await receveur.save();
+
+        
+    } catch (error) {
+        console.log('Erreur lors de la demande d\'amitié : ', error);
+    }  
+
+
+}

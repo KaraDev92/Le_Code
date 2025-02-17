@@ -13,9 +13,8 @@
         <p><span>Présentation :</span> {{friendSi().presentation}}</p>
     </div>
 
-    <!--  A lier -->
     <div class="menuProfil">
-        <a href="">Demande d'ami</a>
+        <p (click)="askForFriend(friendSi().pseudo)">Demande d'ami</p>
         <a routerLink="/messages">Messages</a>
     </div>
     </div>
