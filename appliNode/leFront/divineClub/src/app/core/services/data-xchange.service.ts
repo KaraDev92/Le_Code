@@ -139,20 +139,26 @@ export class DataXchangeService {
   respondFriendship(reponse: {rep: boolean, pseudo: string}): Observable<Member> {
     return this.http.put<Member>(this.rootURL + "/responsefriend", reponse).pipe(
       tap(() => {
-        if (reponse.rep) {
+        this.member.update((member) => {
+          member.req_ami = member.req_ami.filter((req) => req.pseudo !== reponse.pseudo);
+          return member;
+        });
+        if (reponse.rep === true) {
           this.member.update((member) => {
-            member.amis = member.amis.push({pseudo: reponse.pseudo});
+            member.amis.push({
+              pseudo: reponse.pseudo,
+              pantheon: '',
+              type_deite: '',
+              amis: [],
+              mur: [],
+              presentation: ''
+            });
             return member;
           })
-        } else {
-          this.member.update((member) => {
-            member.req_ami = member.req_ami.filter((req) => req.pseudo !== reponse.pseudo);
-            return member;
-          })
-        }
+        } 
       })
     )
-  }
+  };
   
   // DELETE - Supprimer son compte
   // deleteMember(pseudo: string): Observable<void> {

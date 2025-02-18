@@ -1,4 +1,4 @@
-
+//démarrage du serveur et de la connection à MongoDB
 
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -15,10 +15,11 @@ const app = express();
 const port = process.env.PORT;
 
 const corsOptions = {
+  origin: ["http://localhost:3000", "http://localhost:4200/", "https://karadev--divine-club--m6tyjvjtlvvw.code.run/"]
+    //origin: "*"
+    //origin: "http://localhost:4200/"
     //origin: "https://karadev--divine-club--m6tyjvjtlvvw.code.run/"
-    origin: "http://localhost:4200/"
 };
-
   
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
@@ -47,7 +48,7 @@ userRouter(app);
 
 //page d'accueil  
 app.get('/', (req,res) => {
-    //res.send('App Works !');
+    res.send('App Works !');
     res.sendFile(process.cwd()+"/appliNode/leFront/divineClub/dist/divine-club/browser/index.html");
     
 });

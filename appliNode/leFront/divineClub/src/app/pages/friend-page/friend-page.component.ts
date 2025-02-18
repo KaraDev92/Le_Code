@@ -47,6 +47,7 @@ export class FriendPageComponent {
 
   //demande d'ami
   askForFriend(amiDemande: string) {
+    console.log('ami demandé depuis page friend : ', amiDemande);
     this.messagesService.askForFriend(amiDemande).subscribe({
       next:() => {
         this.errorMessage = "Nous avons envoyé votre requête d'amitié à " + amiDemande + ".";

@@ -78,6 +78,7 @@ export class MessagesService {
   
   //demande d'ami
   askForFriend(amiDemande: string): Observable<Message> {
+    console.log('pseudo ami demandé depuis mess service : ', amiDemande);
     const demande = {pseudo: amiDemande};
     return this.http.post<Message>(this.rootURL + '/askfriend', demande).pipe(
       catchError (error => {

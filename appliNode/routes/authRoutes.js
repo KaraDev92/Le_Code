@@ -3,8 +3,8 @@
 import { verifySignUp, verifyEmail, verifyPseudo } from "../middlewares/verifySignUp.js";
 import { signup, signin } from "../controllers/authController.js";
 import { verifyToken } from "../middlewares/authJwt.js";
-import { dataForProfile, searchForAMember, deleteFriend } from "../mongoDB/DBQueries.js";
-import { sendMessage, getMessagesFriends, markread, deleteMessage } from "../middlewares/messenger.js";
+import { dataForProfile, searchForAMember, deleteFriend, responseFriend } from "../mongoDB/DBQueries.js";
+import { sendMessage, getMessagesFriends, markread, deleteMessage, askForFriend } from "../middlewares/messenger.js";
 import { newPost, deletePost } from "../mongoDB/QueriesPost.js";
 
 
@@ -53,6 +53,9 @@ export const authRouter = (app) => {
     //pour supprimer un message
     app.put("/deletemessage", verifyToken, deleteMessage);
 
+    //pour gérer la réponse à une demande d'amitié
+    app.put("/responsefriend", passerParLa, verifyToken, responseFriend);
+
     //pour les nouveaux membres
     app.post("/newuser", verifySignUp, signup);
 
@@ -63,5 +66,5 @@ export const authRouter = (app) => {
     app.post("/searchmember", verifyToken, searchForAMember);
 
     //pour une demande d'amitié
-    app.post("/askfriend", passerParLa, verifyToken);
+    app.post("/askfriend", verifyToken, askForFriend);
 };

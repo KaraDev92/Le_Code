@@ -54,7 +54,7 @@ export const signin = async (req, res) => {
         const token = sign({ id: user.id }, process.env.SECRET, {
             algorithm: 'HS256',
             allowInsecureKeySizes: true,
-            expiresIn: 1200, // 600 = 20 min,  3600 = 1 heure en secondes            
+            expiresIn: 3600, // 600 = 20 min,  3600 = 1 heure en secondes            
         });
 
         res.status(200).send({

@@ -2,7 +2,7 @@
 
 import { Profil, Friend } from "../mongoDB/lesShemas.js";
 import mongoose from "mongoose";
-import { warnExFriend } from "../middlewares/messenger.js";
+import { refusMail, warnExFriend } from "../middlewares/messenger.js";
 
 //pour récupérer les données de son profil
 export const dataForProfile = async (req, res) => {
@@ -116,4 +116,43 @@ export const deleteFriend = async (req,res) => {
         res.status(502).send();
     }
 };
+
+//gérer la réponse à une demande d'amitité
+export const responseFriend = async (req, res) => {
+    const answer = req.body.rep;
+    const asker = req.body.pseudo;
+    const userId = req.userId;
+
+    try {
+        const cursorAskerId = await Profil.findOne({pseudo : asker});
+        const cursorUser = await Profil.findById(userId);
+
+        const user = await Profil.findById(userId)
+        .select("req_ami")
+        .lean()
+        .exec();
+
+        const newListReq_ami = user.req_ami.filter((req) => String(req._id) !== String(cursorAskerId._id));
+        cursorUser.req_ami = newListReq_ami;
+        await cursorUser.save();
+
+        if (answer) {
+            cursorAskerId.amis.push(userId);
+            cursorUser.amis.push(cursorAskerId._id);
+
+            await cursorAskerId.save();
+            await cursorUser.save();
+        } else {
+            const askerEmail = await Profil.findOne({pseudo : asker})
+                .select("adresse_mail")
+                .lean()
+                .exec();
+            console.log('asker ID email : ',askerEmail.adresse_mail);
+            await refusMail(cursorUser.pseudo, askerEmail.adresse_mail, asker);
+        }
+    } catch (error) {
+        console.log("Erreur dans la gestion du refus d'amitié : ", error);
+        res.status(502).send();
+    }
+}
 

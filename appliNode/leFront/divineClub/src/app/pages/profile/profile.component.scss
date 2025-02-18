@@ -1,7 +1,6 @@
 section {
     margin-bottom: 2rem;
 }
-
 .bandeau {
     display: flex;
     flex-direction: row;
@@ -9,7 +8,6 @@ section {
     margin: 1rem 1.5rem;
     gap: 1rem;
 }
-
 .avatar {
     background-image: url(../../../../public/avatar.jpg);
     border-radius: 10px;
@@ -18,7 +16,6 @@ section {
     background-repeat: no-repeat;
     background-position: center;
 }
-
 .identite {
     width: 60%;
 }
@@ -30,7 +27,6 @@ section {
     font-size: 1.3rem;
     font-weight: 700;
 }
-
 .menuProfil {
     display: flex;
     flex-direction: column;
@@ -38,35 +34,28 @@ section {
     font-weight: 700;
     padding-bottom: 1.5rem;
 }
-
 .menuProfil a {
     color: var(--txt-titre);
     padding-bottom: 1.5rem;
 }
-
 h2 {
     font-size: 2rem;
     font-weight: 700;
     color: var(--txt-titre);
     margin-bottom: 1.3rem;
 }
-
 span {
     font-style: italic;
 }
-
 .menuProfil a:hover {
     color: var(--txt-voyant);
 }
-
 .amis, .posts {
     margin: 1rem 1.5rem;
 }
-
 ul {
     list-style-type: none;
 }
-
 .unPost {
     border: 1px var(--marque) solid;
     padding: 0.5rem;
@@ -76,22 +65,18 @@ ul {
 .titrePost {
     color: var(--marque);
 }
-
 .contenuPost {
     font-size: 1.1rem;
 }
-
 .datePost {
     font-style: italic;
     font-weight: 500;
     font-size: 1rem;
 }
-
 .separateur {
     width: 35%;
     margin: 1rem 32%;
 }
-
 .recherche {
     display: flex;
     flex-direction: row;
@@ -106,7 +91,6 @@ textarea {
     border: 1px solid var(--fond);
     border-radius: 20px;
 }
-
 input, textarea {
     padding: 0.1rem 0.5rem;
     margin: 0rem 2rem;
@@ -115,19 +99,16 @@ input, textarea {
 input {
     width: 12rem;
 }
-
 textarea {
     width: 25rem;
     height: 5rem;
 }
-
 button {
     background-color: var(--bouton);
     color: black;
     padding: 0rem 1.5rem;
     cursor: pointer;
 }
-
 .poster {
     display: flex;
     flex-direction: column;
@@ -136,11 +117,9 @@ button {
     margin-top: 0.5rem;
     align-items: flex-start;
 }
-
 .poster button {
     width: 8rem;
 }
-
 .demandes {
     margin-bottom: 0.5rem;
 }
@@ -148,18 +127,39 @@ button {
     color: var(--txt-voyant);
     cursor: pointer;
 }
-
 .poubelle:hover {
     cursor: pointer;
 }
 .poubelle {
     height: 1.1rem;
 }
- .ligneAmi {
+.ligneAmi {
     display: flex;
     gap: 1rem;
- }
-
+}
+.reqAmi {
+    display: flex;
+    gap: 0.7rem;
+    margin-bottom: 1rem;
+}
+.choixOK {
+    background-image: url("../../../../public/OK.png");
+    cursor: pointer;
+    height: 1.1rem;
+    width: 2rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.choixNOT {
+    background-image: url("../../../../public/notOK.png");
+    cursor: pointer;
+    height: 1.1rem;
+    width: 2rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
 .ng-valid:not(form) {
     border: 2px solid green;
 }

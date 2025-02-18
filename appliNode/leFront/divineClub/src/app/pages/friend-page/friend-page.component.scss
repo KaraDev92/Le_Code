@@ -31,18 +31,17 @@ section {
     font-weight: 700;
 }
 
-.menuProfil {
+.menuProfil,
+.menuProfil a {
     display: flex;
     flex-direction: column;
     font-size: 2rem;
     font-weight: 700;
     padding-bottom: 1.5rem;
+    color: var(--txt-titre);
+    cursor: pointer;
 }
 
-.menuProfil a {
-    color: var(--txt-titre);
-    padding-bottom: 1.5rem;
-}
 
 h2 {
     font-size: 2rem;
@@ -55,7 +54,8 @@ span {
     font-style: italic;
 }
 
-.menuProfil a:hover {
+.menuProfil a:hover,
+.menuProfil p:hover {
     color: var(--txt-voyant);
 }
 

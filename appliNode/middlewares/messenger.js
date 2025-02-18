@@ -71,7 +71,7 @@ export const sendMessage = async (req, res) => {
     
     try {
         const subject = "Nouveau message de " + expediteur + " sur Divine Club";
-        const content = "Bonjour " + destinataire + ",\n\n" + expediteur + " vous a envoyé un message sur Divine Club.\n\n\nCordialement,\n\nL'équipe Divine Club";
+        const content = "Bonjour " + destinataire + ",\n\n" + expediteur + " vous a envoyé un message sur Divine Club.\n\n\nCordialement,\n\nL'équipe Divine Club\nhttps://karadev--divine-club--m6tyjvjtlvvw.code.run";
 
         //récupération adresse mail du destinataire
         const target =  await findEmailAndIdByPseudo(destinataire);
@@ -138,7 +138,7 @@ export const markread = async (req, res) => {
 export const warnExFriend = async (expediteur, destinataire, destinataireEMail) => {
     try {
         const sujet = "Action de " + expediteur + " sur Divine Club";
-        const contenu = "Bonjour " + destinataire + ",\n\n" + expediteur + " vous a supprimé de ses amis sur Divine Club.\n\n\nCordialement,\n\nL'équipe Divine Club";
+        const contenu = "Bonjour " + destinataire + ",\n\n" + expediteur + " vous a supprimé de ses amis sur Divine Club.\n\n\nCordialement,\n\nL'équipe Divine Club\nhttps://karadev--divine-club--m6tyjvjtlvvw.code.run";
 
         //envoi du mail
         await main(destinataireEMail, sujet, contenu);
@@ -181,7 +181,7 @@ export const deleteMessage = async (req, res) => {
 //pour envoyer un message de bienvenu (pour un nouvel inscrit)
 export const welcomeMail = async (email, pseudo) => {
     const sujet = "Bienvenu au Divine Club";
-    const contenu = `Bonjour ${pseudo}, \n\nNous sommes heureux de vous accueillir au sein de notre communauté d'êtres exceptionnels. \nVous aurez la possibilité de communiquer avec vos amis et aussi de faire de nouvelles rencontres.\n\n\nCordialement,\n\nL'équipe Divine Club`;
+    const contenu = `Bonjour ${pseudo}, \n\nNous sommes heureux de vous accueillir au sein de notre communauté d'êtres exceptionnels. \nVous aurez la possibilité de communiquer avec vos amis et aussi de faire de nouvelles rencontres.\n\n\nCordialement,\n\nL'équipe Divine Club\nhttps://karadev--divine-club--m6tyjvjtlvvw.code.run`;
 
     try {
         await main(email, sujet, contenu);
@@ -194,7 +194,7 @@ export const welcomeMail = async (email, pseudo) => {
 export const askForFriend = async (req,res) => {
     const userId = req.userId;
     const pseudoAmi = req.body.pseudo;
-    const sujet = "Demande d'amitié";
+    const sujet = "Demande d'amitié reçue sur Divine Club";
 
     try {
         const amiDemande = await findEmailAndIdByPseudo(pseudoAmi); //adresse_mail et _id schema Messagerie
@@ -202,18 +202,22 @@ export const askForFriend = async (req,res) => {
             .select("pseudo")
             .exec();
         
-        const contenu = `Bonjour ${pseudoAmi}, \n\nVous avez reçu une demande d'amitié de la part de ${user.pseudo}.\n\n\nCordialement,\n\nL'équipe Divine Club`;
-
-        await main(amiDemande.adresse_mail, sujet, contenu);
-        
+        const contenu = `Bonjour ${pseudoAmi}, \n\nVous avez reçu une demande d'amitié de la part de ${user.pseudo}.\n\n\nCordialement,\n\nL'équipe Divine Club\nhttps://karadev--divine-club--m6tyjvjtlvvw.code.run`;
+             
         const receveur = await Profil.findById(amiDemande._id);
         receveur.req_ami.push(userId);
         await receveur.save();
 
-        
+        await main(amiDemande.adresse_mail, sujet, contenu);
     } catch (error) {
         console.log('Erreur lors de la demande d\'amitié : ', error);
     }  
+};
 
-
-}
+//envoi de message de refus d'amitié
+export const refusMail = async (pseudoRefuser, emailAsker, pseudoAsker) => {
+    const sujet = "Demande d'amitié refusée";
+    const contenu = `Bonjour ${pseudoAsker}, \n\n${pseudoRefuser} a refusé votre demande d'amitié.\n\n\nCordialement,\n\nL'équipe Divine Club\nhttps://karadev--divine-club--m6tyjvjtlvvw.code.run`;
+    
+    await main(emailAsker, sujet, contenu);
+};
